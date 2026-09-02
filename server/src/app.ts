@@ -9,4 +9,8 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to RoadTrip Sync :) !!!" });
 });
 
+app.get("/health", (_req: Request, res: Response) => {
+  res.status(200).json({ status: "ok" });
+});
+
 export default app;
