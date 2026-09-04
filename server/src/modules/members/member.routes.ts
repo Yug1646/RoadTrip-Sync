@@ -9,9 +9,9 @@ router.post("/:tripId/members");
 router.get("/:tripId/members");
 
 // TODO: Change vehicle assignment
-router.patch("/tripId/members/:memberId");
+router.patch("/:tripId/members/:memberId");
 
 // TODO: Leave trip
-router.delete("/tripId/members/:memberId");
+router.delete("/:tripId/members/:memberId");
 
 export default router;

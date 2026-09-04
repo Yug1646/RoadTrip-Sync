@@ -1,0 +1,20 @@
+info:
+  name: add trip
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{basetrips}}/:tripId/members"
+  params:
+    - name: tripId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

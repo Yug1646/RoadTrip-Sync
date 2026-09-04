@@ -1,0 +1,20 @@
+info:
+  name: add vehicle
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{basetrips}}/:tripId/vehicles"
+  params:
+    - name: tripId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

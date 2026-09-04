@@ -1,0 +1,23 @@
+info:
+  name: delete vehicles
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{basetrips}}/:tripId/vehicles/:vehicleId"
+  params:
+    - name: tripId
+      value: ""
+      type: path
+    - name: vehicleId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
