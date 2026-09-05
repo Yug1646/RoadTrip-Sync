@@ -2,6 +2,8 @@
 
 Node.js + TypeScript REST API for RoadTrip Sync.
 
+Product model: the **vehicle** is the tracked unit. Drivers are app users; passengers have no accounts. See the root README for the full concept.
+
 ## Requirements
 
 - Node.js >= 22 (see `.nvmrc`)
@@ -31,17 +33,17 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] `app.ts` + `server.ts` wired up, feature routes mounted through central `routes.ts`
 - [x] `GET /health` returns JSON
 - [x] `tsconfig.json` verified (tsc clean)
-- [x] First commits pushed to GitHub
+- [x] GitHub repo connected, code pushed
 
-### Phase 2 — Database & Basic APIs (in progress)
+### Phase 2 — Database & Basic APIs (database layer complete, API layer next)
 
 - [x] Local PostgreSQL 18 installed, `roadtrip_sync_dev` database created
 - [x] `drizzle-orm` + `drizzle-kit` installed (stable 0.x line)
 - [x] Connection wired: `src/db/index.ts` (postgres.js driver), `drizzle.config.ts` uses validated env
 - [x] Bruno collection scaffolded for all API routes
-- [ ] Schema: users, trips, trip_members, vehicles, locations in single `src/db/schema.ts`  **← CURRENT TASK**
-- [ ] Constraints: UNIQUE email + username, UNIQUE (trip_id, user_id) on trip_members and locations, FK delete behaviour
-- [ ] First migration generated (`npm run db:generate`) and applied (`npm run db:migrate`)
+- [x] Schema in single `src/db/schema.ts` — vehicle-centric model: users, trips, vehicles, locations
+- [x] Constraints: UNIQUE email + username, UNIQUE (trip_id, vehicle_id) on locations, ON DELETE cascade/restrict per FK, CHECK on trips.status
+- [x] First migration generated (`drizzle/0000_mean_jean_grey.sql`) and applied
 - [ ] bcrypt password hashing
 - [ ] JWT auth + auth middleware
 - [ ] Zod validation for every request body/param
@@ -55,11 +57,11 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [ ] POST /auth/register, POST /auth/login implemented (routes exist as stubs)
 - [ ] Users: profile endpoints implemented
 - [ ] Trips: create, list, update status implemented
-- [ ] Vehicles: create per trip implemented
-- [ ] Members: join, list, assign vehicle implemented
-- [ ] Locations: upsert current location implemented
+- [ ] Vehicles: create per trip with driver assignment implemented
+- [ ] Locations: driver upserts own vehicle's current location implemented
 
 ### Later (not started)
 
-- [ ] Socket.IO real-time location broadcasting
+- [ ] Socket.IO real-time vehicle location broadcasting
 - [ ] Trip start / end flow
+- [ ] Future: passenger/member system (expenses, who paid, trip history) — only when those features are designed
