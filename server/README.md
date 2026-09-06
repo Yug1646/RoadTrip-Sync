@@ -44,7 +44,8 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Schema in single `src/db/schema.ts` — vehicle-centric model: users, trips, vehicles, locations
 - [x] Constraints: UNIQUE email + username, UNIQUE (trip_id, vehicle_id) on locations, ON DELETE cascade/restrict per FK, CHECK on trips.status
 - [x] First migration generated (`drizzle/0000_mean_jean_grey.sql`) and applied
-- [ ] bcrypt password hashing
+- [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
+- [x] Register endpoint: happy path working (service + bcrypt + 201) — validation and error handling in progress
 - [ ] JWT auth + auth middleware
 - [ ] Zod validation for every request body/param
 - [ ] Central error-handling middleware
@@ -54,7 +55,8 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 
 ### Phase 3 — Users, Trips & Maps (API side)
 
-- [ ] POST /auth/register, POST /auth/login implemented (routes exist as stubs)
+- [ ] POST /auth/register — in progress (happy path works; pending: Zod validation, error middleware, response body)
+- [ ] POST /auth/login (currently a stub)
 - [ ] Users: profile endpoints implemented
 - [ ] Trips: create, list, update status implemented
 - [ ] Vehicles: create per trip with driver assignment implemented

@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{base}}/login"
+  url: "{{base}}/auth/login"
   auth: inherit
 
 settings:
