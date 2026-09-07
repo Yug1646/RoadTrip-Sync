@@ -46,17 +46,18 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] First migration generated (`drizzle/0000_mean_jean_grey.sql`) and applied
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Register endpoint: happy path working (service + bcrypt + 201) — validation and error handling in progress
-- [ ] JWT auth + auth middleware
-- [ ] Zod validation for every request body/param
-- [ ] Central error-handling middleware
+- [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
+- [ ] JWT auth middleware (`middleware/auth.ts`) — token *signing* done (`utils/jwt.ts`), request verification pending
+- [ ] Zod validation for every request body/param (done for register + login, remaining endpoints pending)
 - [ ] Rate limiting
-- [ ] Endpoints tested with Bruno (requests written, testing pending)
+- [ ] Endpoints tested with Bruno (register + login tested; remaining endpoints pending)
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
 ### Phase 3 — Users, Trips & Maps (API side)
 
-- [ ] POST /auth/register — in progress (happy path works; pending: Zod validation, error middleware, response body)
-- [ ] POST /auth/login (currently a stub)
+- [x] POST /auth/register implemented (Zod validation, bcrypt hash, 201/409)
+- [x] POST /auth/login implemented (401 on invalid credentials, returns signed JWT)
+- [ ] GET /auth/me — token check (needs auth middleware first)
 - [ ] Users: profile endpoints implemented
 - [ ] Trips: create, list, update status implemented
 - [ ] Vehicles: create per trip with driver assignment implemented
