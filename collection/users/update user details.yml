@@ -6,6 +6,9 @@ info:
 http:
   method: PATCH
   url: "{{base}}/users/me"
+  body:
+    type: json
+    data: ""
   auth: inherit
 
 settings:

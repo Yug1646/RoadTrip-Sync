@@ -16,8 +16,16 @@ export const createUser = async (
     .from(users)
     .where(eq(users.email, email));
   if (existingUser.length > 0) {
-    throw new AppError(409, "Email already regiestered");
+    throw new AppError(409, "Email already registered");
   }
+  const [usernameTaken] = await db
+    .select()
+    .from(users)
+    .where(eq(users.username, username));
+  if (usernameTaken) {
+    throw new AppError(409, "Username already taken");
+  }
+
   const passwordHash = await hashPassword(password);
   const [created] = await db
     .insert(users)
@@ -38,14 +46,4 @@ export const authenticateUser = async (email: string, password: string) => {
     throw new AppError(401, "Invalid credentials");
   }
   return toUserResponse(user);
-};
-
-//? Get user by id
-export const getUserById = async (userId: number) => {
-  const findUser = await db.select().from(users).where(eq(users.id, userId));
-
-  if (findUser.length === 0) {
-    throw new AppError(404, "User not found");
-  }
-  return toUserResponse(findUser[0]);
 };

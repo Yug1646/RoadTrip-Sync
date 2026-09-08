@@ -6,8 +6,11 @@ import tripRoutes from "./modules/trips/trip.routes.js";
 import locationRoutes from "./modules/locations/location.routes.js";
 import vehicleRoutes from "./modules/vehicles/vehicle.routes.js";
 
+import { authLimiter } from "./middleware/rateLimit.js";
+
 const router = Router();
 
+router.use("/api/auth", authLimiter);
 router.use("/api/auth", authRoutes);
 router.use("/api/users", userRoutes);
 router.use("/api/trips", tripRoutes);

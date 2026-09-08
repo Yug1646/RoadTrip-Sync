@@ -8,14 +8,8 @@ export const toUserResponse = (user: {
   email: user.email,
 });
 
-export const toAuthResponse = (
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  },
-  token: string,
-) => ({
-  token,
-  user: toUserResponse(user),
-});
+export const toUserProfileResponse = (user: {
+  username: string;
+  email: string;
+  // TODO: Add rest of the details after phase 5
+}) => ({ username: user.username, email: user.email });

@@ -45,20 +45,21 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Constraints: UNIQUE email + username, UNIQUE (trip_id, vehicle_id) on locations, ON DELETE cascade/restrict per FK, CHECK on trips.status
 - [x] First migration generated (`drizzle/0000_mean_jean_grey.sql`) and applied
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
-- [x] Register endpoint: happy path working (service + bcrypt + 201) — validation and error handling in progress
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
 - [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
-- [ ] Zod validation for every request body/param (done for register + login, remaining endpoints pending)
-- [ ] Rate limiting
-- [ ] Endpoints tested with Bruno (register + login tested; remaining endpoints pending)
+- [ ] Zod validation for every request body/param (register, login, users done — trips/vehicles/locations pending)
+- [x] Rate limiting (`middleware/rateLimit.ts` — loose global limiter, strict limiter on `/api/auth`)
+- [ ] Endpoints tested with Bruno (auth + users tested; trips/vehicles/locations pending)
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
 ### Phase 3 — Users, Trips & Maps (API side)
 
 - [x] POST /auth/register implemented (Zod validation, bcrypt hash, 201/409)
 - [x] POST /auth/login implemented (401 on invalid credentials, returns signed JWT)
-- [x] GET /auth/me implemented (protected, returns current user from JWT)
-- [ ] Users: profile endpoints — GET /users/me written but **not yet protected**; PATCH /users/me pending
+- [x] GET /auth/me — removed by decision: `GET /users/me` (protected) serves both profile and session check
+- [x] Users: profile endpoints implemented and protected (GET + PATCH `/users/me`, self-collision guards, two-shape DTOs)
+- [ ] Fix: username duplicate check missing in `createUser` (duplicate username currently returns 500 instead of 409)
+- [ ] Refactor: extract `firstOrThrow` helper in `utils/` to remove repeated query + check + throw boilerplate
 - [ ] Trips: create, list, update status implemented
 - [ ] Vehicles: create per trip with driver assignment implemented
 - [ ] Locations: driver upserts own vehicle's current location implemented

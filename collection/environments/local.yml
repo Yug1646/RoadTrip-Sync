@@ -4,5 +4,3 @@ variables:
     value: http://localhost:8080/api
   - name: basetrips
     value: http://localhost:8080/api/trips
-  - secret: true
-    name: token
