@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { loginUser, registerUser } from "./auth.controller.js";
+import {
+  getAuthenticatedUser,
+  loginUser,
+  registerUser,
+} from "./auth.controller.js";
+import { authMiddleware } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -8,5 +13,8 @@ router.post("/register", registerUser);
 
 // TODO: User login
 router.post("/login", loginUser);
+
+// TODO: Get authenticated user
+router.get("/me", authMiddleware, getAuthenticatedUser);
 
 export default router;

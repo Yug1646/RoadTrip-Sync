@@ -41,4 +41,11 @@ export const authenticateUser = async (email: string, password: string) => {
 };
 
 //? Get user by id
-export const getUserById = async () => {};
+export const getUserById = async (userId: number) => {
+  const findUser = await db.select().from(users).where(eq(users.id, userId));
+
+  if (findUser.length === 0) {
+    throw new AppError(404, "User not found");
+  }
+  return toUserResponse(findUser[0]);
+};

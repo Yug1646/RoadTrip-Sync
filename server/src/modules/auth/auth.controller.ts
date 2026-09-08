@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { authenticateUser, createUser } from "./auth.service.js";
+import { authenticateUser, createUser, getUserById } from "./auth.service.js";
 import { loginSchema, registerSchema } from "./auth.schema.js";
 import { signToken } from "../../utils/jwt.js";
 
@@ -19,4 +19,7 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 // TODO: Authenticate User
-export const getAuthenticatedUser = async (req: Request, res: Response) => {};
+export const getAuthenticatedUser = async (req: Request, res: Response) => {
+  const user = await getUserById(req.user!.userId);
+  res.status(200).json(user);
+};

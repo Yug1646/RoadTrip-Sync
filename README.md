@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2 in progress — register + login working end-to-end; auth middleware and remaining endpoints next.
+Phase 2 in progress — auth complete (register, login, JWT middleware, protected /auth/me); trips, vehicles and locations endpoints next.

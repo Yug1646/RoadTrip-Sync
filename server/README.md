@@ -47,7 +47,7 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Register endpoint: happy path working (service + bcrypt + 201) — validation and error handling in progress
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
-- [ ] JWT auth middleware (`middleware/auth.ts`) — token *signing* done (`utils/jwt.ts`), request verification pending
+- [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
 - [ ] Zod validation for every request body/param (done for register + login, remaining endpoints pending)
 - [ ] Rate limiting
 - [ ] Endpoints tested with Bruno (register + login tested; remaining endpoints pending)
@@ -57,8 +57,8 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 
 - [x] POST /auth/register implemented (Zod validation, bcrypt hash, 201/409)
 - [x] POST /auth/login implemented (401 on invalid credentials, returns signed JWT)
-- [ ] GET /auth/me — token check (needs auth middleware first)
-- [ ] Users: profile endpoints implemented
+- [x] GET /auth/me implemented (protected, returns current user from JWT)
+- [ ] Users: profile endpoints — GET /users/me written but **not yet protected**; PATCH /users/me pending
 - [ ] Trips: create, list, update status implemented
 - [ ] Vehicles: create per trip with driver assignment implemented
 - [ ] Locations: driver upserts own vehicle's current location implemented
