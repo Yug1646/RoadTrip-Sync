@@ -10,10 +10,16 @@ http:
     type: json
     data: |-
       {
-        "email" : "yugjain@gmail.com",
-        "password" : "Yain@1537"
+        "email" : "jeangrey@gmail.com",
+        "password" : "jean@123"
       }
-  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+        bru.setEnvVar("token", body.token);
 
 settings:
   encodeUrl: true

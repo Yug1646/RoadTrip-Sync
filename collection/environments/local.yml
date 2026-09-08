@@ -2,6 +2,7 @@ name: local
 variables:
   - name: base
     value: http://localhost:8080/api
-    description: ""
   - name: basetrips
     value: http://localhost:8080/api/trips
+  - secret: true
+    name: token
