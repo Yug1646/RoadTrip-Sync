@@ -7,21 +7,23 @@ import {
   updateTrip,
 } from "./trip.controller.js";
 
+import { authMiddleware } from "../../middleware/auth.js";
+
 const router = Router();
 
 // TODO: Create new Trip
-router.post("/", createTrip);
+router.post("/", authMiddleware, createTrip);
 
 // TODO: Get all trips
-router.get("/", getMyTrips);
+router.get("/", authMiddleware, getMyTrips);
 
 // TODO: Get trip by members
-router.get("/:tripId", getTripById);
+router.get("/:tripId", authMiddleware, getTripById);
 
 // TODO: Update Trip details
-router.patch("/:tripId", updateTrip);
+router.patch("/:tripId", authMiddleware, updateTrip);
 
 // TODO: Delete Trip
-router.delete("/:tripId", deleteTrip);
+router.delete("/:tripId", authMiddleware, deleteTrip);
 
 export default router;

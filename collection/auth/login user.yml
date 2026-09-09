@@ -14,6 +14,21 @@ http:
         "password" : "Yain@1537"
       }
 
+
+      /*
+      {
+        "email" : "jeangrey@gmail.com",
+        "password" : "jean@123"
+      }
+      */
+
+      /*
+      {
+        "email": "tonystark@gmail.com",
+        "password" : "tony@123"
+      }
+      */
+
 runtime:
   scripts:
     - type: after-response

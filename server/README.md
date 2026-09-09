@@ -47,22 +47,35 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
 - [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
-- [ ] Zod validation for every request body/param (register, login, users done — trips/vehicles/locations pending)
+- [ ] Zod validation for every request body/param (register, login, users, trips done — vehicles/locations pending)
 - [x] Rate limiting (`middleware/rateLimit.ts` — loose global limiter, strict limiter on `/api/auth`)
-- [ ] Endpoints tested with Bruno (auth + users tested; trips/vehicles/locations pending)
+- [ ] Endpoints tested with Bruno (auth, users, trips tested; vehicles/locations pending)
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
-### Phase 3 — Users, Trips & Maps (API side)
+### Phase 3 — Backend Build, Cleanup & Real-Time (rephased plan)
+
+**Build — all service/controller functions:**
 
 - [x] POST /auth/register implemented (Zod validation, bcrypt hash, 201/409)
 - [x] POST /auth/login implemented (401 on invalid credentials, returns signed JWT)
 - [x] GET /auth/me — removed by decision: `GET /users/me` (protected) serves both profile and session check
 - [x] Users: profile endpoints implemented and protected (GET + PATCH `/users/me`, self-collision guards, two-shape DTOs)
-- [ ] Fix: username duplicate check missing in `createUser` (duplicate username currently returns 500 instead of 409)
-- [ ] Refactor: extract `firstOrThrow` helper in `utils/` to remove repeated query + check + throw boilerplate
-- [ ] Trips: create, list, update status implemented
-- [ ] Vehicles: create per trip with driver assignment implemented
-- [ ] Locations: driver upserts own vehicle's current location implemented
+- [x] Fix: username duplicate check in `createUser` (409)
+- [x] Trips module: create (201, born `planned`), list (empty list = 200), get by id, update (name/status), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
+- [ ] Vehicles: create per trip with driver assignment, list, update, delete (driver-only)
+- [ ] Locations: driver upserts own vehicle's current location (ON CONFLICT), list trip locations
+
+**Cleanup — review-driven, scope decided after all modules complete:**
+
+- [ ] Full code review of all modules → written debt list
+- [ ] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, ... — per-module placement)
+- [ ] Naming and DTO consistency pass
+
+**Real-time — own focused block, not part of cleanup:**
+
+- [ ] Socket.IO: socket auth (JWT), trip rooms, vehicle location broadcast, reconnection handling
+
+**Phase 4 — Flutter + Dart**, against the complete API (REST + Socket.IO).
 
 ### Later (not started)
 

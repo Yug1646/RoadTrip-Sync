@@ -6,6 +6,13 @@ info:
 http:
   method: POST
   url: "{{basetrips}}/"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Golden Gate bridge to Empire State",
+        "status" : "completed"
+      }
   auth: inherit
 
 settings:

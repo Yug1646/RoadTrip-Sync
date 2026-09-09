@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2 in progress — auth complete (register, login, JWT middleware, protected /auth/me); trips, vehicles and locations endpoints next.
+Phase 2/3 build in progress — auth, users and trips complete (with ownership + status rules); vehicles and locations next, then cleanup + Socket.IO. Flutter is Phase 4.

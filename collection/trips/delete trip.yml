@@ -8,7 +8,7 @@ http:
   url: "{{basetrips}}/:id"
   params:
     - name: id
-      value: ""
+      value: "2"
       type: path
   auth: inherit
 

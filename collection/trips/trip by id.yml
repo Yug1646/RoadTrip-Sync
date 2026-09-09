@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{basetrips}}/:id"
+  url: "{{basetrips}}/:tripId"
   params:
-    - name: id
-      value: ""
+    - name: tripId
+      value: abc
       type: path
   auth: inherit
 

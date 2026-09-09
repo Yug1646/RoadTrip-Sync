@@ -4,3 +4,5 @@ variables:
     value: http://localhost:8080/api
   - name: basetrips
     value: http://localhost:8080/api/trips
+  - name: token
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4ODk3NDI2NCwiZXhwIjoxNzg5MDYwNjY0fQ.Mnf25z9GjgQTIPWvf22RHZqEtCgxursK46WP6caPm58
