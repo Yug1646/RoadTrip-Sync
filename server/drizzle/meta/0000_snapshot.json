@@ -1,5 +1,5 @@
 {
-  "id": "56d883be-98f8-4605-84e6-47e680590dc0",
+  "id": "fbde0d10-a43f-4daa-9272-770d6082023c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -118,6 +118,24 @@
           "primaryKey": false,
           "notNull": true
         },
+        "start_location": {
+          "name": "start_location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "end_location": {
+          "name": "end_location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "join_code": {
+          "name": "join_code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -150,7 +168,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "trips_join_code_unique": {
+          "name": "trips_join_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "join_code"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {
         "trips_status_check": {
@@ -242,9 +268,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(100)",
+        "type": {
+          "name": "type",
+          "type": "varchar(20)",
           "primaryKey": false,
           "notNull": true
         },

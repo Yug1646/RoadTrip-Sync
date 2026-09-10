@@ -13,8 +13,12 @@ CREATE TABLE "trips" (
 	"name" varchar(255) NOT NULL,
 	"created_by" integer NOT NULL,
 	"status" varchar NOT NULL,
+	"start_location" varchar,
+	"end_location" varchar,
+	"join_code" varchar(10) NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "trips_join_code_unique" UNIQUE("join_code"),
 	CONSTRAINT "trips_status_check" CHECK ("trips"."status" IN ('planned','active','completed'))
 );
 --> statement-breakpoint
@@ -32,7 +36,7 @@ CREATE TABLE "users" (
 CREATE TABLE "vehicles" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"trip_id" integer NOT NULL,
-	"name" varchar(100) NOT NULL,
+	"type" varchar(20) NOT NULL,
 	"driver_id" integer NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
