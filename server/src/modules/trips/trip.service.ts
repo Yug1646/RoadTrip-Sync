@@ -1,17 +1,20 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../db/index.js";
-import { trips } from "../../db/schema.js";
+import { generateJoinCode } from "../../utils/joinCode.js";
+import { trips, vehicles } from "../../db/schema.js";
 import { toTripResponse } from "../../dto/trip.dto.js";
 import { AppError } from "../../utils/AppError.js";
-import type { UpdateTripInput } from "./trip.schema.js";
+import type { CreateTripInput, UpdateTripInput } from "./trip.schema.js";
 
 //? Create trip
-export const createTrip = async (name: string, createdBy: number) => {
-  const [created] = await db
-    .insert(trips)
-    .values({ name, createdBy, status: "planned" })
-    .returning();
-  return toTripResponse(created);
+export const createTrip = async (data: CreateTripInput, createdBy: number) => {
+  const joinCode = generateJoinCode();
+  null;
+};
+
+//? Join Code
+export const joinTrip = async () => {
+  null;
 };
 
 //? List trips for user

@@ -41,9 +41,9 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] `drizzle-orm` + `drizzle-kit` installed (stable 0.x line)
 - [x] Connection wired: `src/db/index.ts` (postgres.js driver), `drizzle.config.ts` uses validated env
 - [x] Bruno collection scaffolded for all API routes
-- [x] Schema in single `src/db/schema.ts` — vehicle-centric model: users, trips, vehicles, locations
-- [x] Constraints: UNIQUE email + username, UNIQUE (trip_id, vehicle_id) on locations, ON DELETE cascade/restrict per FK, CHECK on trips.status
-- [x] First migration generated (`drizzle/0000_mean_jean_grey.sql`) and applied
+- [x] Schema in single `src/db/schema.ts` — vehicle-centric model: users, trips, vehicles (mode-based: `type`, no name column), locations
+- [x] Constraints: UNIQUE email + username, UNIQUE join_code, UNIQUE (trip_id, vehicle_id) on locations, ON DELETE cascade/restrict per FK, CHECK on trips.status
+- [x] Database reset + fresh baseline migration (`drizzle/0000_doctor_doom.sql`) applied — dev data intentionally wiped
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
 - [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
@@ -61,8 +61,9 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] GET /auth/me — removed by decision: `GET /users/me` (protected) serves both profile and session check
 - [x] Users: profile endpoints implemented and protected (GET + PATCH `/users/me`, self-collision guards, two-shape DTOs)
 - [x] Fix: username duplicate check in `createUser` (409)
-- [x] Trips module: create (201, born `planned`), list (empty list = 200), get by id, update (name/status), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
-- [ ] Vehicles: create per trip with driver assignment, list, update, delete (driver-only)
+- [x] Trips module: create (transaction: trip + creator's unit + generated join code, born `planned`), list, get by id, update (name/status), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
+- [ ] Trips: join-by-code flow — `joinTrip` service + controller; `GET /trips` must include joined trips
+- [ ] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column); create (driver = current user), list, update, delete (driver-only)
 - [ ] Locations: driver upserts own vehicle's current location (ON CONFLICT), list trip locations
 
 **Cleanup — review-driven, scope decided after all modules complete:**
@@ -82,3 +83,4 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [ ] Socket.IO real-time vehicle location broadcasting
 - [ ] Trip start / end flow
 - [ ] Future: passenger/member system (expenses, who paid, trip history) — only when those features are designed
+- [ ] Future: garage — reusable personal vehicles per user + trip participation roster (this deliberately brings back a `trip_members`-style table when designed)

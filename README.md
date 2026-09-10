@@ -7,10 +7,10 @@ A cross-platform mobile application for groups travelling together in multiple v
 A group on a road trip (for example, Mumbai to Goa in two cars) creates a shared trip. Every vehicle has one **driver** — the person whose phone runs RoadTrip Sync and shares that vehicle's GPS location. Passengers don't need the app or an account.
 
 ```text
-Trip: Mumbai → Goa
+Trip: NYC → Golden Gate Bridge
 
-Vehicle A — "Yug's Bike"   driver: Yug    (app connected → shares location)
-Vehicle B — "Steve's Car"  driver: Steve  (app connected → shares location)
+Unit A — Car   driver: Yug    (app connected → shares location)
+Unit B — Bike  driver: Steve  (app connected → shares location)
 
 Tony, Peter, Bucky, Thor = passengers (no app, no account, not tracked)
 ```
@@ -23,7 +23,7 @@ The driver's device represents the vehicle — like a navigation device in a car
 | -------- | ---------------------------------------------------------------- |
 | User     | A registered account — drivers and trip creators                 |
 | Trip     | A shared journey (e.g. "Mumbai to Goa") with one or more vehicles |
-| Vehicle  | The tracked unit — belongs to a trip, has exactly one driver     |
+| Vehicle  | A tracked unit on a trip, defined by its travel mode (car, bike, public transport, walk) and its driver — vehicle names are not stored |
 | Location | A vehicle's current — not historical — position on the trip      |
 
 ## Tech Stack
@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2/3 build in progress — auth, users and trips complete (with ownership + status rules); vehicles and locations next, then cleanup + Socket.IO. Flutter is Phase 4.
+Phase 2/3 build in progress — auth, users and trips working; join-by-code flow and vehicles in progress; then locations, cleanup + Socket.IO. Flutter is Phase 4.

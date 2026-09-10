@@ -31,8 +31,8 @@ export const trips = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "restrict" }),
     status: varchar("status").notNull(),
-    startLocation: varchar("start_location"),
-    endLocation: varchar("end_location"),
+    startLocation: varchar("start_location").notNull(),
+    endLocation: varchar("end_location").notNull(),
     joinCode: varchar("join_code", { length: 10 }).notNull().unique(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
@@ -54,7 +54,7 @@ export const vehicles = pgTable("vehicles", {
   tripId: integer("trip_id")
     .notNull()
     .references(() => trips.id, { onDelete: "cascade" }),
-   type: varchar("type", { length: 20 }).notNull(),
+  type: varchar("type", { length: 20 }).notNull(),
   driverId: integer("driver_id")
     .notNull()
     .references(() => users.id, { onDelete: "restrict" }),

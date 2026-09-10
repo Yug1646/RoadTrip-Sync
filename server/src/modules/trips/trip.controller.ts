@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
 import * as tripService from "./trip.service.js";
-import { createTripSchema } from "./trip.schema.js";
+import { createTripSchema, joinTripSchema } from "./trip.schema.js";
 import { AppError } from "../../utils/AppError.js";
+
 // TODO: Create Trip
 export const createTrip = async (req: Request, res: Response) => {
   const data = createTripSchema.parse(req.body);
-  const userId = req.user!.userId;
-  const trip = await tripService.createTrip(data.name, userId);
+  const trip = await tripService.createTrip(data, req.user!.userId);
   return res.status(201).json(trip);
+};
+
+// TODO: Join trip via code
+export const joinTrip = async (req: Request, res: Response) => {
+  const data = joinTripSchema.parse(req.body);
+  const result = await tripService.joinTrip();
+  return res.status(200).json(result);
 };
 
 // TODO: Get trips

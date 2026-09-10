@@ -4,6 +4,7 @@ import {
   deleteTrip,
   getMyTrips,
   getTripById,
+  joinTrip,
   updateTrip,
 } from "./trip.controller.js";
 
@@ -26,4 +27,6 @@ router.patch("/:tripId", authMiddleware, updateTrip);
 // TODO: Delete Trip
 router.delete("/:tripId", authMiddleware, deleteTrip);
 
+// TODO: Create Join Code
+router.post("/join", authMiddleware, joinTrip);
 export default router;

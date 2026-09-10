@@ -1,5 +1,5 @@
 {
-  "id": "fbde0d10-a43f-4daa-9272-770d6082023c",
+  "id": "fa9881bf-5d08-4ce4-a00d-e80b9f4e5829",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -122,13 +122,13 @@
           "name": "start_location",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "end_location": {
           "name": "end_location",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "join_code": {
           "name": "join_code",
