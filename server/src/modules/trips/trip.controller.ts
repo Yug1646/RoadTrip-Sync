@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as tripService from "./trip.service.js";
-import { createTripSchema, joinTripSchema } from "./trip.schema.js";
+import { createTripSchema, joinTripSchema, updateTripSchema } from "./trip.schema.js";
 import { AppError } from "../../utils/AppError.js";
 
 // TODO: Create Trip
@@ -13,7 +13,7 @@ export const createTrip = async (req: Request, res: Response) => {
 // TODO: Join trip via code
 export const joinTrip = async (req: Request, res: Response) => {
   const data = joinTripSchema.parse(req.body);
-  const result = await tripService.joinTrip();
+  const result = await tripService.joinTrip(data, req.user!.userId);
   return res.status(200).json(result);
 };
 
@@ -36,7 +36,7 @@ export const getTripById = async (req: Request, res: Response) => {
 // TODO: Update Trip
 export const updateTrip = async (req: Request, res: Response) => {
   const tripId = Number(req.params.tripId);
-  const data = req.body;
+  const data = updateTripSchema.parse(req.body);
   if (!Number.isInteger(tripId) || tripId <= 0) {
     throw new AppError(400, "Invalid trip id");
   }
@@ -55,5 +55,5 @@ export const deleteTrip = async (req: Request, res: Response) => {
     throw new AppError(400, "Invalid trip id");
   }
   await tripService.deleteTrip(tripId, req.user!.userId);
-  return res.sendStatus(200);
+  return res.sendStatus(204);
 };

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { authenticateUser, createUser } from "./auth.service.js";
 import { loginSchema, registerSchema } from "./auth.schema.js";
-import { getUserDetailsById } from "../users/user.service.js";
 import { signToken } from "../../utils/jwt.js";
 
 // TODO: Register new user
