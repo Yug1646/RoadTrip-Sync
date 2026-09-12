@@ -61,9 +61,9 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] GET /auth/me — removed by decision: `GET /users/me` (protected) serves both profile and session check
 - [x] Users: profile endpoints implemented and protected (GET + PATCH `/users/me`, self-collision guards, two-shape DTOs)
 - [x] Fix: username duplicate check in `createUser` (409)
-- [x] Trips module: create (transaction: trip + creator's unit + generated join code, born `planned`), list, get by id, update (name/status), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
-- [ ] Trips: join-by-code flow — `joinTrip` service + controller; `GET /trips` must include joined trips
-- [ ] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column); create (driver = current user), list, update, delete (driver-only)
+- [x] Trips module: create (transaction: trip + creator's unit + generated join code, born `planned`), list (created **and** joined), get by id (members-only), update (name/status/locations), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
+- [x] Trips: join-by-code flow — `POST /trips/join` (code → 404, double-join → 409); `GET /trips` includes joined trips
+- [ ] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column). Decision: **no add endpoint** — `POST /trips/join` creates the unit. Pending: list (members-only), update (driver-only), delete (driver-only; blocked while trip is active), authMiddleware on routes
 - [ ] Locations: driver upserts own vehicle's current location (ON CONFLICT), list trip locations
 
 **Cleanup — review-driven, scope decided after all modules complete:**

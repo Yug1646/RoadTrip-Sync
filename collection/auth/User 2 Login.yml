@@ -1,0 +1,47 @@
+info:
+  name: User 2 Login
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{base}}/auth/login"
+  body:
+    type: json
+    data: |2-
+       {
+          "email" : "jean@gmail.com",
+          "password" : "jean@123"
+       }
+      /*
+        {
+          "email" : "tony@gmail.com",
+          "password" : "tony@123"
+        }
+        {
+          "email" : "peter@gmail.com",
+          "password" : "peter@123"
+        }
+        {
+          "email" : "stephen@gmail.com",
+          "password" : "stephen@123"
+        }
+        {
+          "email" : "jean@gmail.com",
+          "password" : "jean@123"
+        }
+      */
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+        bru.setEnvVar("userBToken", body.token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

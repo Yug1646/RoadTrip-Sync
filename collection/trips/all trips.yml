@@ -6,7 +6,9 @@ info:
 http:
   method: GET
   url: "{{basetrips}}/"
-  auth: inherit
+  auth:
+    type: bearer
+    token: "{{userAToken}}"
 
 settings:
   encodeUrl: true

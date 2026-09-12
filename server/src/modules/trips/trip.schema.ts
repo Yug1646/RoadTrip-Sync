@@ -11,6 +11,8 @@ export const updateTripSchema = z
   .object({
     name: z.string().min(1).max(255).optional(),
     status: z.enum(["planned", "active", "completed"]).optional(),
+    startLocation: z.string().min(1).max(255).optional(),
+    endLocation: z.string().min(1).max(255).optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
     message: "At least one field is required",

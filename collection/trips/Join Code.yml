@@ -1,23 +1,22 @@
 info:
-  name: create new trip
+  name: "Join Code "
   type: http
-  seq: 1
+  seq: 6
 
 http:
   method: POST
-  url: "{{basetrips}}/"
+  url: "{{basetrips}}/join"
   body:
     type: json
     data: |-
+      // MAKE USER ADD THE TOKEN OF ANOTHER USER (NOT THE CREATER TOKEN)
       { 
-        "name": "Vacation", 
-        "startLocation": "Los Stanos", 
-        "endLocation": "Miami", 
-        "type": "motorcycle" 
+        "joinCode": "3F20CD5F", 
+        "type": "motorcycle"
       }
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true
