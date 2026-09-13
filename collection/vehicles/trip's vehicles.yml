@@ -8,9 +8,11 @@ http:
   url: "{{basetrips}}/:tripId/vehicles"
   params:
     - name: tripId
-      value: ""
+      value: "2"
       type: path
-  auth: inherit
+  auth:
+    type: bearer
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true

@@ -4,3 +4,7 @@ variables:
     value: http://localhost:8080/api
   - name: basetrips
     value: http://localhost:8080/api/trips
+  - name: userAToken
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4OTI3NjE1NSwiZXhwIjoxNzg5MzYyNTU1fQ.pCzYeuezjpH7la5i9bcxXHxTuqKC37PZW2vk5KDGwHI
+  - name: userBToken
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4OTI3NjQzNCwiZXhwIjoxNzg5MzYyODM0fQ.f54tLItaaVgEwnzcfgjA_Y0l4ZirKVZZX_ujiSu43Q8
