@@ -8,12 +8,14 @@ http:
   url: "{{basetrips}}/:tripId/vehicles/:vehicleId"
   params:
     - name: tripId
-      value: ""
+      value: "2"
       type: path
     - name: vehicleId
-      value: ""
+      value: "3"
       type: path
-  auth: inherit
+  auth:
+    type: bearer
+    token: "{{userAToken}}"
 
 settings:
   encodeUrl: true

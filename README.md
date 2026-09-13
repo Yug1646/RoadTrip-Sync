@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2/3 build in progress — auth, users and trips working; join-by-code flow and vehicles in progress; then locations, cleanup + Socket.IO. Flutter is Phase 4.
+Phase 2/3 build in progress — auth, users, trips and vehicles complete (mode-based units, ownership rules); locations is the last build item, then cleanup + Socket.IO. Flutter is Phase 4.

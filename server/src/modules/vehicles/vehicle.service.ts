@@ -42,8 +42,8 @@ export const deleteVehicle = async (vehicleId: number, userId: number) => {
     .select()
     .from(vehicles)
     .where(eq(vehicles.id, vehicleId));
-  if (!vehicleId || vehicle.driverId !== userId) {
-    throw new AppError(404, "Vehicle not found ");
+  if (!vehicle || vehicle.driverId !== userId) {
+    throw new AppError(404, "Vehicle not found");
   }
   const trip = await tripService.getTripById(vehicle.tripId, userId);
   if (trip.status === "active") {

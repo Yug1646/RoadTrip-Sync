@@ -47,9 +47,9 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
 - [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
-- [ ] Zod validation for every request body/param (register, login, users, trips done — vehicles/locations pending)
+- [ ] Zod validation for every request body/param (register, login, users, trips, vehicles done — locations pending)
 - [x] Rate limiting (`middleware/rateLimit.ts` — loose global limiter, strict limiter on `/api/auth`)
-- [ ] Endpoints tested with Bruno (auth, users, trips tested; vehicles/locations pending)
+- [ ] Endpoints tested with Bruno (auth, users, trips, vehicles tested; locations pending)
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
 ### Phase 3 — Backend Build, Cleanup & Real-Time (rephased plan)
@@ -63,7 +63,7 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Fix: username duplicate check in `createUser` (409)
 - [x] Trips module: create (transaction: trip + creator's unit + generated join code, born `planned`), list (created **and** joined), get by id (members-only), update (name/status/locations), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
 - [x] Trips: join-by-code flow — `POST /trips/join` (code → 404, double-join → 409); `GET /trips` includes joined trips
-- [ ] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column). Decision: **no add endpoint** — `POST /trips/join` creates the unit. Pending: list (members-only), update (driver-only), delete (driver-only; blocked while trip is active), authMiddleware on routes
+- [x] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column). Decision: **no add endpoint** — `POST /trips/join` creates the unit. Implemented + tested: list (members-only), update (driver-only), delete (driver-only; blocked while trip is active); authMiddleware applied
 - [ ] Locations: driver upserts own vehicle's current location (ON CONFLICT), list trip locations
 
 **Cleanup — review-driven, scope decided after all modules complete:**
