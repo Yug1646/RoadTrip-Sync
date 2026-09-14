@@ -2,8 +2,8 @@ CREATE TABLE "locations" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"trip_id" integer NOT NULL,
 	"vehicle_id" integer NOT NULL,
-	"latitude" numeric(10, 7) NOT NULL,
-	"longitude" numeric(10, 7) NOT NULL,
+	"latitude" double precision NOT NULL,
+	"longitude" double precision NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "locations_trip_vehicle_unique" UNIQUE("trip_id","vehicle_id")
 );

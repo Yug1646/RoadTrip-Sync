@@ -35,7 +35,7 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] `tsconfig.json` verified (tsc clean)
 - [x] GitHub repo connected, code pushed
 
-### Phase 2 — Database & Basic APIs (database layer complete, API layer next)
+### Phase 2 — Database & Basic APIs (complete)
 
 - [x] Local PostgreSQL 18 installed, `roadtrip_sync_dev` database created
 - [x] `drizzle-orm` + `drizzle-kit` installed (stable 0.x line)
@@ -47,14 +47,14 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] bcrypt password hashing (`utils/passwords.ts` — hash + compare helpers)
 - [x] Central error-handling middleware (`middleware/error.ts` — AppError, Zod, 500 branches; mounted after router)
 - [x] JWT auth middleware (`middleware/auth.ts` — Bearer verification, `req.user` typed via `src/types/express.d.ts`)
-- [ ] Zod validation for every request body/param (register, login, users, trips, vehicles done — locations pending)
+- [x] Zod validation for every request body/param — all endpoints (register, login, users, trips, vehicles, locations)
 - [x] Rate limiting (`middleware/rateLimit.ts` — loose global limiter, strict limiter on `/api/auth`)
-- [ ] Endpoints tested with Bruno (auth, users, trips, vehicles tested; locations pending)
+- [x] Endpoints tested with Bruno — all 21 endpoints across auth, users, trips, vehicles, locations
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
-### Phase 3 — Backend Build, Cleanup & Real-Time (rephased plan)
+### Phase 3 — Cleanup, QA & Real-Time (build complete)
 
-**Build — all service/controller functions:**
+**Build — all service/controller functions (complete):**
 
 - [x] POST /auth/register implemented (Zod validation, bcrypt hash, 201/409)
 - [x] POST /auth/login implemented (401 on invalid credentials, returns signed JWT)
@@ -64,11 +64,16 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Trips module: create (transaction: trip + creator's unit + generated join code, born `planned`), list (created **and** joined), get by id (members-only), update (name/status/locations), delete (204; **active trips → 409**; creator-only with existence-hiding 404s)
 - [x] Trips: join-by-code flow — `POST /trips/join` (code → 404, double-join → 409); `GET /trips` includes joined trips
 - [x] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column). Decision: **no add endpoint** — `POST /trips/join` creates the unit. Implemented + tested: list (members-only), update (driver-only), delete (driver-only; blocked while trip is active); authMiddleware applied
-- [ ] Locations: driver upserts own vehicle's current location (ON CONFLICT), list trip locations
+- [x] Locations: driver upserts own unit's current location (ON CONFLICT upsert; one row per unit per trip), list units + positions for the map (members-only; not-started units return `null` coords)
 
-**Cleanup — review-driven, scope decided after all modules complete:**
+**QA & Cleanup — this week's focus:**
 
+- [ ] Full-backend QA pass — every endpoint: inputs, error messages, status codes, edge states (member/non-member, planned/active/completed)
 - [ ] Full code review of all modules → written debt list
+- [ ] Known debt (found during build, deferred):
+  - Creator loses GET access to their own trip after deleting their own unit (membership-via-unit edge)
+  - Location updates currently allowed on `planned`/`completed` trips — decide the rule (only `active`?)
+  - Minor: `getTripLocation` → plural name; namespace imports in location controller; finished functions still marked `// TODO`
 - [ ] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, ... — per-module placement)
 - [ ] Naming and DTO consistency pass
 

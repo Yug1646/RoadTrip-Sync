@@ -1,6 +1,6 @@
 import {
   check,
-  decimal,
+  doublePrecision,
   integer,
   pgTable,
   serial,
@@ -73,8 +73,8 @@ export const locations = pgTable(
     vehicleId: integer("vehicle_id")
       .notNull()
       .references(() => vehicles.id, { onDelete: "cascade" }),
-    latitude: decimal("latitude", { precision: 10, scale: 7 }).notNull(),
-    longitude: decimal("longitude", { precision: 10, scale: 7 }).notNull(),
+    latitude: doublePrecision("latitude").notNull(),
+    longitude: doublePrecision("longitude").notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
