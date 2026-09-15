@@ -8,18 +8,18 @@ http:
   url: "{{basetrips}}/:tripId/location"
   params:
     - name: tripId
-      value: "3"
+      value: "10"
       type: path
   body:
     type: json
     data: |-
       {
-        "latitude": 40.74,
-        "longitude": -76.00
+        "latitude": 33.74,
+        "longitude": -84.00
       }
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true

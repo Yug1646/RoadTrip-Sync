@@ -1,18 +1,18 @@
 info:
-  name: user 2 login
+  name: user 1 login
   type: http
-  seq: 3
+  seq: 2
 
 http:
   method: POST
   url: "{{base}}/auth/login"
   body:
     type: json
-    data: |-
-      {
-        "email": "peter@gmail.com",
-        "password": "peter@123"
-      }
+    data: |2-
+       {
+          "email" : "yugjain@gmail.com",
+          "password" : "Yain@1537"
+       }
       /*
         {
           "email" : "tony@gmail.com",
@@ -37,7 +37,7 @@ runtime:
     - type: after-response
       code: |-
         const body = res.getBody();
-        bru.setEnvVar("userBToken", body.token);
+        bru.setEnvVar("userAToken", body.token);
 
 settings:
   encodeUrl: true

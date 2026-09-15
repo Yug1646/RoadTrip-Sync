@@ -10,14 +10,14 @@ http:
     type: json
     data: |-
       { 
-        "name": "Vacation", 
-        "startLocation": "Los Stanos", 
-        "endLocation": "Miami", 
-        "type": "motorcycle" 
+        "name": "College Reunion", 
+        "startLocation": "Boston, MA", 
+        "endLocation": "Cape Cod, MA", 
+        "type": "car" 
       }
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true

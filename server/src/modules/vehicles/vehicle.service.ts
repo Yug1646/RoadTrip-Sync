@@ -28,6 +28,13 @@ export const updateVehicle = async (
   if (!vehicle || vehicle.driverId !== userId) {
     throw new AppError(404, "Vehicle not found");
   }
+  const trip = await tripService.getTripById(vehicle.tripId, userId);
+  if (trip.status === "completed") {
+    throw new AppError(
+      409,
+      "Trip is completed. Vehicle mode can no longer be changed.",
+    );
+  }
   const [updated] = await db
     .update(vehicles)
     .set({ type })

@@ -8,17 +8,17 @@ http:
   url: "{{basetrips}}/:id"
   params:
     - name: id
-      value: "4"
+      value: "7"
       type: path
   body:
     type: json
     data: |-
       {
-        "status":"active"
+        "status":"completed"
       }
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true

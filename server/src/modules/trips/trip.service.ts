@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { generateJoinCode } from "../../utils/joinCode.js";
-import { trips, vehicles } from "../../db/schema.js";
+import { trips, vehicles, users } from "../../db/schema.js";
 import { toTripResponse } from "../../dto/trip.dto.js";
 import { AppError } from "../../utils/AppError.js";
 import type {
@@ -95,7 +95,17 @@ export const getTripById = async (tripId: number, userId: number) => {
   if (!membership) {
     throw new AppError(404, "Trip not found");
   }
-  return toTripResponse(trip);
+  const members = await db
+    .select({
+      vehicleId: vehicles.id,
+      type: vehicles.type,
+      driverId: vehicles.driverId,
+      driverName: users.username,
+    })
+    .from(vehicles)
+    .innerJoin(users, eq(vehicles.driverId, users.id))
+    .where(eq(vehicles.tripId, tripId));
+  return { ...toTripResponse(trip), members };
 };
 
 //? Update trip

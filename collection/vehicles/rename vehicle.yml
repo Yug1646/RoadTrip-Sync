@@ -8,20 +8,20 @@ http:
   url: "{{basetrips}}/:tripId/vehicles/:vehicleId"
   params:
     - name: tripId
-      value: "4"
+      value: "8"
       type: path
     - name: vehicleId
-      value: "7"
+      value: "12"
       type: path
   body:
     type: json
     data: |-
       {
-        "type" : "motorcycle"
+        "type" : "car"
       }
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true

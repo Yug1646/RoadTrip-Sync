@@ -11,12 +11,12 @@ http:
     data: |-
       // MAKE USER ADD THE TOKEN OF ANOTHER USER (NOT THE CREATER TOKEN)
       { 
-        "joinCode": "3F20CD5F", 
+        "joinCode": "5FF2A82F", 
         "type": "motorcycle"
       }
   auth:
     type: bearer
-    token: "{{userBToken}}"
+    token: "{{userAToken}}"
 
 settings:
   encodeUrl: true

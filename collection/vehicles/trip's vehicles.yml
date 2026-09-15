@@ -8,7 +8,7 @@ http:
   url: "{{basetrips}}/:tripId/vehicles"
   params:
     - name: tripId
-      value: "2"
+      value: "8"
       type: path
   auth:
     type: bearer

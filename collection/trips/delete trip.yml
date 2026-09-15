@@ -8,11 +8,11 @@ http:
   url: "{{basetrips}}/:id"
   params:
     - name: id
-      value: "1"
+      value: "7"
       type: path
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true
