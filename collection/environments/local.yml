@@ -5,6 +5,6 @@ variables:
   - name: basetrips
     value: http://localhost:8080/api/trips
   - name: userAToken
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4OTQ1MzIyNywiZXhwIjoxNzg5NTM5NjI3fQ.0uqbfKN8Vp6rLyqa1-2J9c2eN0b_xiDUu4_-cIESVpI
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4OTU2OTQ5NiwiZXhwIjoxNzg5NjU1ODk2fQ.uXlsI9aBeceTcj4IG5semY0DRVjfSYHH-ijLR0S_nSg
   - name: userBToken
     value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4OTQ1NDcxMiwiZXhwIjoxNzg5NTQxMTEyfQ.rO191NfzG3qSwgrrv_yBoM3jrjaYuHW3h9j420MNaIw

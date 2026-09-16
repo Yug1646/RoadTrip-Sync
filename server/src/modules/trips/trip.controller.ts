@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as tripService from "./trip.service.js";
 import { createTripSchema, joinTripSchema, updateTripSchema } from "./trip.schema.js";
-import { AppError } from "../../utils/AppError.js";
+import { parseIdParam } from "../../utils/params.js";
 
 // TODO: Create Trip
 export const createTrip = async (req: Request, res: Response) => {
@@ -25,21 +25,15 @@ export const getMyTrips = async (req: Request, res: Response) => {
 
 // TODO: Get trip by id
 export const getTripById = async (req: Request, res: Response) => {
-  const tripId = Number(req.params.tripId);
-  if (!Number.isInteger(tripId) || tripId <= 0) {
-    throw new AppError(400, "Invalid trip id");
-  }
+  const tripId = parseIdParam(req.params.tripId, "trip id");
   const trip = await tripService.getTripById(tripId, req.user!.userId);
   return res.status(200).json(trip);
 };
 
 // TODO: Update Trip
 export const updateTrip = async (req: Request, res: Response) => {
-  const tripId = Number(req.params.tripId);
+  const tripId = parseIdParam(req.params.tripId, "trip id");
   const data = updateTripSchema.parse(req.body);
-  if (!Number.isInteger(tripId) || tripId <= 0) {
-    throw new AppError(400, "Invalid trip id");
-  }
   const updateTripDetails = await tripService.updateTrip(
     tripId,
     req.user!.userId,
@@ -50,10 +44,7 @@ export const updateTrip = async (req: Request, res: Response) => {
 
 // TODO: Delete trip
 export const deleteTrip = async (req: Request, res: Response) => {
-  const tripId = Number(req.params.tripId);
-  if (!Number.isInteger(tripId) || tripId <= 0) {
-    throw new AppError(400, "Invalid trip id");
-  }
+  const tripId = parseIdParam(req.params.tripId, "trip id");
   await tripService.deleteTrip(tripId, req.user!.userId);
   return res.sendStatus(204);
 };
