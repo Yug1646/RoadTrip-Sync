@@ -1,8 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "../../db/index.js";
-import { generateJoinCode } from "../../utils/joinCode.js";
 import { trips, vehicles, users } from "../../db/schema.js";
-import { toTripResponse } from "../../dto/trip.dto.js";
+import { generateJoinCode } from "../../utils/joinCode.js";
 import { AppError } from "../../utils/AppError.js";
 import type {
   CreateTripInput,
@@ -10,6 +9,8 @@ import type {
   UpdateTripInput,
 } from "./trip.schema.js";
 import { toVehicleResponse } from "../../dto/vehicle.dto.js";
+import { toTripResponse } from "../../dto/trip.dto.js";
+import { findTripById } from "./trip.queries.js";
 
 //? Create trip
 export const createTrip = async (data: CreateTripInput, createdBy: number) => {
@@ -44,7 +45,7 @@ export const createTrip = async (data: CreateTripInput, createdBy: number) => {
   });
 };
 
-//? Join Code
+//? Join trip via Code
 export const joinTrip = async (data: JoinTripInput, userId: number) => {
   const [trip] = await db
     .select()
@@ -84,14 +85,15 @@ export const getTripsForUser = async (userId: number) => {
 
 //? Find trip by id
 export const getTripById = async (tripId: number, userId: number) => {
-  const [trip] = await db.select().from(trips).where(eq(trips.id, tripId));
+  const trip = await findTripById(tripId);
   if (!trip) {
-    throw new AppError(404, "No trip found");
+    throw new AppError(404, "Trip not found");
   }
   const [membership] = await db
     .select()
     .from(vehicles)
     .where(and(eq(vehicles.tripId, tripId), eq(vehicles.driverId, userId)));
+
   if (!membership) {
     throw new AppError(404, "Trip not found");
   }
@@ -115,7 +117,7 @@ export const updateTrip = async (
   userId: number,
   data: UpdateTripInput,
 ) => {
-  const [trip] = await db.select().from(trips).where(eq(trips.id, tripId));
+  const trip = await findTripById(tripId);
   if (!trip || trip.createdBy !== userId) {
     throw new AppError(404, "Trip not found");
   }
@@ -130,7 +132,7 @@ export const updateTrip = async (
 //? Delete trip
 //! Note: Only trip creater can delete
 export const deleteTrip = async (tripId: number, userId: number) => {
-  const [trip] = await db.select().from(trips).where(eq(trips.id, tripId));
+  const trip = await findTripById(tripId);
   if (!trip || trip.createdBy !== userId) {
     throw new AppError(404, "Trip not found");
   }
