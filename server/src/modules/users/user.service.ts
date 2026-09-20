@@ -4,24 +4,25 @@ import { users } from "../../db/schema.js";
 import { AppError } from "../../utils/AppError.js";
 import { toUserProfileResponse, toUserResponse } from "../../dto/user.dto.js";
 import type { UpdateProfileInput } from "./user.schema.js";
+import { findUserById } from "./user.queries.js";
 
 //? Get user details by id
 export const getUserDetailsById = async (userId: number) => {
-  const findUser = await db.select().from(users).where(eq(users.id, userId));
-  if (findUser.length === 0) {
+  const user = await findUserById(userId);
+  if (!user) {
     throw new AppError(404, "User not found");
   }
-  return toUserProfileResponse(findUser[0]);
+  return toUserProfileResponse(user);
 };
 
 //? Update user
 export const updateUser = async (userId: number, data: UpdateProfileInput) => {
-  const [existing] = await db.select().from(users).where(eq(users.id, userId));
-  if (!existing) {
+  const user = await findUserById(userId);
+  if (!user) {
     throw new AppError(404, "User not found");
   }
 
-  if (data.username && data.username !== existing.username) {
+  if (data.username && data.username !== user.username) {
     const [usernameClash] = await db
       .select()
       .from(users)
@@ -31,13 +32,13 @@ export const updateUser = async (userId: number, data: UpdateProfileInput) => {
     }
   }
 
-  if (data.email && data.email !== existing.email) {
+  if (data.email && data.email !== user.email) {
     const [emailClash] = await db
       .select()
       .from(users)
       .where(and(eq(users.email, data.email), ne(users.id, userId)));
     if (emailClash) {
-      throw new AppError(409, "Email already registered");
+      throw new AppError(409, "Email already taken");
     }
   }
 
