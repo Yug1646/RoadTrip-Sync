@@ -3,14 +3,14 @@ import { authenticateUser, createUser } from "./auth.service.js";
 import { loginSchema, registerSchema } from "./auth.schema.js";
 import { signToken } from "../../utils/jwt.js";
 
-// TODO: Register new user
+//? Register new user
 export const registerUser = async (req: Request, res: Response) => {
   const data = registerSchema.parse(req.body);
   const result = await createUser(data.username, data.email, data.password);
   res.status(201).json(result);
 };
 
-// TODO: Login user
+//? Login user
 export const loginUser = async (req: Request, res: Response) => {
   const data = loginSchema.parse(req.body);
   const user = await authenticateUser(data.email, data.password);

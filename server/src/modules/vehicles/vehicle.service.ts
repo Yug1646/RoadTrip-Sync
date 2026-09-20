@@ -5,6 +5,7 @@ import * as tripService from "../trips/trip.service.js";
 import { toVehicleResponse } from "../../dto/vehicle.dto.js";
 import { AppError } from "../../utils/AppError.js";
 import { findVehicleById } from "./vehicle.queries.js";
+import type { UpdateVehicleInput } from "./vehicle.schema.js";
 
 //? List vehicles by trip
 export const listVehiclesByTrip = async (tripId: number, userId: number) => {
@@ -20,7 +21,7 @@ export const listVehiclesByTrip = async (tripId: number, userId: number) => {
 export const updateVehicle = async (
   vehicleId: number,
   userId: number,
-  type: string,
+  data: UpdateVehicleInput,
 ) => {
   const vehicle = await findVehicleById(vehicleId);
   if (!vehicle || vehicle.driverId !== userId) {
@@ -35,7 +36,7 @@ export const updateVehicle = async (
   }
   const [updated] = await db
     .update(vehicles)
-    .set({ type })
+    .set({ type: data.type })
     .where(eq(vehicles.id, vehicleId))
     .returning();
   return toVehicleResponse(updated);

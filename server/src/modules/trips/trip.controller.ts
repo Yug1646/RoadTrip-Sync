@@ -1,36 +1,40 @@
 import { Request, Response } from "express";
 import * as tripService from "./trip.service.js";
-import { createTripSchema, joinTripSchema, updateTripSchema } from "./trip.schema.js";
+import {
+  createTripSchema,
+  joinTripSchema,
+  updateTripSchema,
+} from "./trip.schema.js";
 import { parseIdParam } from "../../utils/params.js";
 
-// TODO: Create Trip
+//? Create Trip
 export const createTrip = async (req: Request, res: Response) => {
   const data = createTripSchema.parse(req.body);
   const trip = await tripService.createTrip(data, req.user!.userId);
   return res.status(201).json(trip);
 };
 
-// TODO: Join trip via code
+//? Join trip via code
 export const joinTrip = async (req: Request, res: Response) => {
   const data = joinTripSchema.parse(req.body);
   const result = await tripService.joinTrip(data, req.user!.userId);
   return res.status(200).json(result);
 };
 
-// TODO: Get trips
+//? Get trips
 export const getMyTrips = async (req: Request, res: Response) => {
   const trips = await tripService.getTripsForUser(req.user!.userId);
   return res.status(200).json(trips);
 };
 
-// TODO: Get trip by id
+//? Get trip by id
 export const getTripById = async (req: Request, res: Response) => {
   const tripId = parseIdParam(req.params.tripId, "trip id");
   const trip = await tripService.getTripById(tripId, req.user!.userId);
   return res.status(200).json(trip);
 };
 
-// TODO: Update Trip
+//? Update Trip
 export const updateTrip = async (req: Request, res: Response) => {
   const tripId = parseIdParam(req.params.tripId, "trip id");
   const data = updateTripSchema.parse(req.body);
@@ -42,7 +46,7 @@ export const updateTrip = async (req: Request, res: Response) => {
   return res.status(200).json(updateTripDetails);
 };
 
-// TODO: Delete trip
+//? Delete trip
 export const deleteTrip = async (req: Request, res: Response) => {
   const tripId = parseIdParam(req.params.tripId, "trip id");
   await tripService.deleteTrip(tripId, req.user!.userId);

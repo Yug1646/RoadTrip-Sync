@@ -20,7 +20,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
   const vehicle = await vehicleService.updateVehicle(
     vehicleId,
     req.user!.userId,
-    data.type,
+    data,
   );
   return res.status(200).json(vehicle);
 };
