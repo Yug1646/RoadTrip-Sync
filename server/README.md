@@ -52,7 +52,7 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Endpoints tested with Bruno — all 21 endpoints across auth, users, trips, vehicles, locations
 - [ ] `build` / `start` npm scripts (needed at deployment, not before)
 
-### Phase 3 — Cleanup, QA & Real-Time (build complete)
+### Phase 3 — Cleanup, QA & Real-Time (complete — Socket.IO moved to Phase 4)
 
 **Build — all service/controller functions (complete):**
 
@@ -66,28 +66,20 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [x] Vehicles: **mode-based units** (`type`: car / motorcycle / public_transport / walk / other — no name column). Decision: **no add endpoint** — `POST /trips/join` creates the unit. Implemented + tested: list (members-only), update (driver-only), delete (driver-only; blocked while trip is active); authMiddleware applied
 - [x] Locations: driver upserts own unit's current location (ON CONFLICT upsert; one row per unit per trip), list units + positions for the map (members-only; not-started units return `null` coords)
 
-**QA & Cleanup — this week's focus:**
+**QA & Cleanup (complete):**
 
 - [x] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, `vehicle.queries.ts` — per-module placement; services refactored onto them)
-- [ ] Full-backend QA pass — every endpoint: inputs, error messages, status codes, edge states (member/non-member, planned/active/completed)
-- [ ] Full code review of all modules → written debt list
+- [x] Full-backend QA pass — all endpoints tested across inputs, messages, status codes, edge states (member/non-member, planned/active/completed); findings fixed during the pass
+- [x] Full code review of all modules — findings became shipped rules (roster in trip details, completed-trip freeze, join rules, creator-unit guard)
 - [x] Vehicle rule shipped: mode changes frozen once a trip is `completed` (planned/active = editable, completed = frozen)
-- [ ] Known debt (found during build, deferred):
-  - Creator loses GET access to their own trip after deleting their own unit (membership-via-unit edge)
-  - Location updates currently allowed on `planned`/`completed` trips — decide the rule (only `active`?)
-  - Minor: `getTripLocation` → plural name; namespace imports in location controller; finished functions still marked `// TODO`
+- [x] Known debt — fully resolved: creator-access edge fixed, location sharing gated to `active` only, joining `completed` trips blocked, minor naming items cleaned
 - [ ] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, ... — per-module placement)
 - [ ] Naming and DTO consistency pass
 
-**Real-time — own focused block, not part of cleanup:**
-
-- [ ] Socket.IO: socket auth (JWT), trip rooms, vehicle location broadcast, reconnection handling
-
-**Phase 4 — Flutter + Dart**, against the complete API (REST + Socket.IO).
+**Phase 4 — React Native (Expo) + TypeScript + Socket.IO**, built together: the mobile app consumes the REST API, and the real-time layer (socket auth via JWT, trip rooms, vehicle location broadcast, reconnection) is implemented alongside it.
 
 ### Later (not started)
 
-- [ ] Socket.IO real-time vehicle location broadcasting
-- [ ] Trip start / end flow
+- [ ] Trip start / end flow refinements
 - [ ] Future: passenger/member system (expenses, who paid, trip history) — only when those features are designed
 - [ ] Future: garage — reusable personal vehicles per user + trip participation roster (this deliberately brings back a `trip_members`-style table when designed)

@@ -28,13 +28,13 @@ The driver's device represents the vehicle — like a navigation device in a car
 
 ## Tech Stack
 
-- **Mobile:** Flutter, Dart
+- **Mobile:** React Native + TypeScript (Expo)
 - **Backend:** Node.js (>= 22), TypeScript, Express.js
 - **Database:** PostgreSQL, Drizzle ORM
 - **Validation:** Zod
 - **Auth:** JWT, bcrypt
 - **Real-time:** WebSockets / Socket.IO
-- **Maps:** Google Maps Platform, device GPS
+- **Maps:** Mappls (MapmyIndia) SDK, device GPS
 
 ## How Tracking Works
 
@@ -57,7 +57,7 @@ Frequent updates flow through the real-time layer; the database only stores each
 ```
 RoadTrip Sync/
 ├── collection/   Bruno / OpenCollection API requests
-├── mobile/       Flutter application (not started yet)
+├── mobile/       React Native + TypeScript app (Expo) (not started yet)
 ├── server/       Node.js + TypeScript REST API (in progress)
 └── docs/         Design documents
 ```
@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2/3 build **complete** — all 21 endpoints implemented and tested (auth, users, trips with join-by-code, vehicles, locations). Next: full-backend QA pass, cleanup review, then Socket.IO. Flutter is Phase 4.
+Phase 2 and 3 **complete** — the backend is fully built and tested: 21 REST endpoints across auth, users, trips (join-by-code), vehicles and locations, with a complete lifecycle rule system. Phase 4 next: **React Native (Expo) + Socket.IO** together.
