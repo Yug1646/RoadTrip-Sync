@@ -49,6 +49,12 @@ export const deleteVehicle = async (vehicleId: number, userId: number) => {
     throw new AppError(404, "Vehicle not found");
   }
   const trip = await tripService.getTripById(vehicle.tripId, userId);
+  if (trip.createdBy === userId) {
+    throw new AppError(
+      409,
+      "Creators cannot delete their own unit. Delete the trip instead.",
+    );
+  }
   if (trip.status === "active") {
     throw new AppError(
       409,

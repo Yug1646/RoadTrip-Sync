@@ -11,7 +11,13 @@ export const upsertVehicleLocation = async (
   userId: number,
   coords: { latitude: number; longitude: number },
 ) => {
-  await tripService.getTripById(tripId, userId);
+  const trip = await tripService.getTripById(tripId, userId); // membership gate + trip
+  if (trip.status !== "active") {
+    throw new AppError(
+      409,
+      `Location sharing is only available while the trip is active. This trip is ${trip.status}.`,
+    );
+  }
   const unit = await findUnitByTripAndDriver(tripId, userId);
   if (!unit) {
     throw new AppError(404, "You have no vehicle in this trip");
