@@ -11,6 +11,7 @@ import type {
 import { toVehicleResponse } from "../../dto/vehicle.dto.js";
 import { toTripResponse } from "../../dto/trip.dto.js";
 import { findTripById } from "./trip.queries.js";
+import { findUnitByTripAndDriver } from "../vehicles/vehicle.queries.js";
 
 //? Create trip
 export const createTrip = async (data: CreateTripInput, createdBy: number) => {
@@ -54,11 +55,7 @@ export const joinTrip = async (data: JoinTripInput, userId: number) => {
   if (!trip) {
     throw new AppError(404, "Invalid join code");
   }
-  const [alreadyJoined] = await db
-    .select()
-    .from(vehicles)
-    .where(and(eq(vehicles.tripId, trip.id), eq(vehicles.driverId, userId)));
-
+  const alreadyJoined = await findUnitByTripAndDriver(trip.id, userId);
   if (alreadyJoined) {
     throw new AppError(409, "You have already joined this trip");
   }
@@ -89,10 +86,7 @@ export const getTripById = async (tripId: number, userId: number) => {
   if (!trip) {
     throw new AppError(404, "Trip not found");
   }
-  const [membership] = await db
-    .select()
-    .from(vehicles)
-    .where(and(eq(vehicles.tripId, tripId), eq(vehicles.driverId, userId)));
+  const membership = await findUnitByTripAndDriver(tripId, userId);
 
   if (!membership) {
     throw new AppError(404, "Trip not found");

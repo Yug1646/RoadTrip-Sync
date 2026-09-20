@@ -68,8 +68,10 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 
 **QA & Cleanup — this week's focus:**
 
+- [x] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, `vehicle.queries.ts` — per-module placement; services refactored onto them)
 - [ ] Full-backend QA pass — every endpoint: inputs, error messages, status codes, edge states (member/non-member, planned/active/completed)
 - [ ] Full code review of all modules → written debt list
+- [x] Vehicle rule shipped: mode changes frozen once a trip is `completed` (planned/active = editable, completed = frozen)
 - [ ] Known debt (found during build, deferred):
   - Creator loses GET access to their own trip after deleting their own unit (membership-via-unit edge)
   - Location updates currently allowed on `planned`/`completed` trips — decide the rule (only `active`?)

@@ -3,6 +3,7 @@ import { db } from "../../db/index.js";
 import { locations, vehicles } from "../../db/schema.js";
 import * as tripService from "../trips/trip.service.js";
 import { AppError } from "../../utils/AppError.js";
+import { findUnitByTripAndDriver } from "../vehicles/vehicle.queries.js";
 
 //? Upsert vehicle location (driver's own unit; one row per unit per trip)
 export const upsertVehicleLocation = async (
@@ -10,11 +11,8 @@ export const upsertVehicleLocation = async (
   userId: number,
   coords: { latitude: number; longitude: number },
 ) => {
-  await tripService.getTripById(tripId, userId); // membership gate → 404
-  const [unit] = await db
-    .select()
-    .from(vehicles)
-    .where(and(eq(vehicles.tripId, tripId), eq(vehicles.driverId, userId)));
+  await tripService.getTripById(tripId, userId);
+  const unit = await findUnitByTripAndDriver(tripId, userId);
   if (!unit) {
     throw new AppError(404, "You have no vehicle in this trip");
   }

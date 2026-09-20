@@ -4,6 +4,7 @@ import { vehicles } from "../../db/schema.js";
 import * as tripService from "../trips/trip.service.js";
 import { toVehicleResponse } from "../../dto/vehicle.dto.js";
 import { AppError } from "../../utils/AppError.js";
+import { findVehicleById } from "./vehicle.queries.js";
 
 //? List vehicles by trip
 export const listVehiclesByTrip = async (tripId: number, userId: number) => {
@@ -21,10 +22,7 @@ export const updateVehicle = async (
   userId: number,
   type: string,
 ) => {
-  const [vehicle] = await db
-    .select()
-    .from(vehicles)
-    .where(eq(vehicles.id, vehicleId));
+  const vehicle = await findVehicleById(vehicleId);
   if (!vehicle || vehicle.driverId !== userId) {
     throw new AppError(404, "Vehicle not found");
   }
@@ -45,10 +43,7 @@ export const updateVehicle = async (
 
 //? Delete vehicle (driver-only, blocked while trip is active)
 export const deleteVehicle = async (vehicleId: number, userId: number) => {
-  const [vehicle] = await db
-    .select()
-    .from(vehicles)
-    .where(eq(vehicles.id, vehicleId));
+  const vehicle = await findVehicleById(vehicleId);
   if (!vehicle || vehicle.driverId !== userId) {
     throw new AppError(404, "Vehicle not found");
   }
