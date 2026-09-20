@@ -55,6 +55,9 @@ export const joinTrip = async (data: JoinTripInput, userId: number) => {
   if (!trip) {
     throw new AppError(404, "Invalid join code");
   }
+  if (trip.status === "completed") {
+    throw new AppError(409, "This trip has ended. You cannot join it.");
+  }
   const alreadyJoined = await findUnitByTripAndDriver(trip.id, userId);
   if (alreadyJoined) {
     throw new AppError(409, "You have already joined this trip");
