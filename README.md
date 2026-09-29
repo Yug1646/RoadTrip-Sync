@@ -1,41 +1,69 @@
 # RoadTrip Sync
 
-A cross-platform mobile application for groups of people travelling together in multiple vehicles.
+A cross-platform mobile application for groups travelling together in multiple vehicles, where each vehicle shares its live location with the rest of the group.
 
 ## The Idea
 
-A group on a road trip (for example, Mumbai to Goa with one bike and one car) creates a shared trip room. Members join the room, get organised into vehicles, and — once the trip is active — can see each other's live locations on a map in real time.
+A group on a road trip (for example, Mumbai to Goa in two cars) creates a shared trip. Every vehicle has one **driver** — the person whose phone runs RoadTrip Sync and shares that vehicle's GPS location. Passengers don't need the app or an account.
+
+```text
+Trip: NYC → Golden Gate Bridge
+
+Unit A — Car   driver: Yug    (app connected → shares location)
+Unit B — Bike  driver: Steve  (app connected → shares location)
+
+Tony, Peter, Bucky, Thor = passengers (no app, no account, not tracked)
+```
+
+The driver's device represents the vehicle — like a navigation device in a car representing that car's position. The group sees every vehicle of the trip on a live map.
 
 ## Core Concepts
 
-| Concept  | Meaning                                                    |
-| -------- | ---------------------------------------------------------- |
-| User     | A registered account                                       |
-| Trip     | A shared trip room (e.g. "Mumbai to Goa")                  |
-| Member   | A user participating in a trip                             |
-| Vehicle  | Any vehicle (bike, car, van...) belonging to a trip        |
-| Location | A member's current — not historical — position on a trip   |
+| Concept  | Meaning                                                          |
+| -------- | ---------------------------------------------------------------- |
+| User     | A registered account — drivers and trip creators                 |
+| Trip     | A shared journey (e.g. "Mumbai to Goa") with one or more vehicles |
+| Vehicle  | A tracked unit on a trip, defined by its travel mode (car, bike, public transport, walk) and its driver — vehicle names are not stored |
+| Location | A vehicle's current — not historical — position on the trip      |
 
 ## Tech Stack
 
-- **Mobile:** Flutter, Dart
+- **Mobile:** React Native + TypeScript (Expo)
 - **Backend:** Node.js (>= 22), TypeScript, Express.js
 - **Database:** PostgreSQL, Drizzle ORM
 - **Validation:** Zod
 - **Auth:** JWT, bcrypt
 - **Real-time:** WebSockets / Socket.IO
-- **Maps:** Google Maps Platform, device GPS
+- **Maps:** Mappls (MapmyIndia) SDK, device GPS
+
+## How Tracking Works
+
+```text
+Driver's phone GPS
+      ↓
+Mobile app (React Native)
+      ↓
+WebSocket / Socket.IO
+      ↓
+Node.js server  →  PostgreSQL (stores current vehicle location)
+      ↓
+Broadcast to other trip participants' apps
+```
+
+Frequent updates flow through the real-time layer; the database only stores each vehicle's latest position.
 
 ## Repository Structure
 
 ```
 RoadTrip Sync/
-├── mobile/   Flutter application (not started yet)
-└── server/   Node.js + TypeScript REST API (in progress)
+├── collection/   Bruno / OpenCollection API requests
+├── ui/           React Native + TypeScript app (Expo) — Phase 4 scaffolded
+├── server/       Node.js + TypeScript REST API (complete)
+└── docs/         Design documents
 ```
 
 Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Early development — Phase 1 (project foundation).
+Phase 2 and 3 **complete** — backend fully built and tested (21 REST endpoints). **Phase 4 started** — React Native (Expo) app scaffolded in `ui/`; mobile plan lives in `ui/README.md`. Socket.IO is implemented alongside Phase 4.
