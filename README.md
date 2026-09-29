@@ -41,7 +41,7 @@ The driver's device represents the vehicle — like a navigation device in a car
 ```text
 Driver's phone GPS
       ↓
-Flutter app
+Mobile app (React Native)
       ↓
 WebSocket / Socket.IO
       ↓
