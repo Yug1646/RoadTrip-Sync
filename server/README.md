@@ -76,7 +76,7 @@ API test collection lives in the root `collection/` folder (Bruno / OpenCollecti
 - [ ] Query helper extraction (`user.queries.ts`, `trip.queries.ts`, ... — per-module placement)
 - [ ] Naming and DTO consistency pass
 
-**Phase 4 — React Native (Expo) + TypeScript + Socket.IO**, built together: the mobile app consumes the REST API, and the real-time layer (socket auth via JWT, trip rooms, vehicle location broadcast, reconnection) is implemented alongside it.
+**Phase 4 — React Native (Expo) + TypeScript + Socket.IO** — mobile app scaffolded in `../ui` (see `../ui/README.md` for the mobile plan). The real-time layer (socket auth via JWT, trip rooms, vehicle location broadcast, reconnection) is implemented alongside the mobile app.
 
 ### Later (not started)
 

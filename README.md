@@ -57,8 +57,8 @@ Frequent updates flow through the real-time layer; the database only stores each
 ```
 RoadTrip Sync/
 ├── collection/   Bruno / OpenCollection API requests
-├── mobile/       React Native + TypeScript app (Expo) (not started yet)
-├── server/       Node.js + TypeScript REST API (in progress)
+├── ui/           React Native + TypeScript app (Expo) — Phase 4 scaffolded
+├── server/       Node.js + TypeScript REST API (complete)
 └── docs/         Design documents
 ```
 
@@ -66,4 +66,4 @@ Backend progress is tracked in [server/README.md](server/README.md).
 
 ## Status
 
-Phase 2 and 3 **complete** — the backend is fully built and tested: 21 REST endpoints across auth, users, trips (join-by-code), vehicles and locations, with a complete lifecycle rule system. Phase 4 next: **React Native (Expo) + Socket.IO** together.
+Phase 2 and 3 **complete** — backend fully built and tested (21 REST endpoints). **Phase 4 started** — React Native (Expo) app scaffolded in `ui/`; mobile plan lives in `ui/README.md`. Socket.IO is implemented alongside Phase 4.
