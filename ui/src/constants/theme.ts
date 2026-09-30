@@ -80,6 +80,7 @@ export const globalStyles = StyleSheet.create({
     paddingVertical: spacing.md,
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "stretch",
   },
   primaryButtonText: {
     color: "#FFFFFF",
