@@ -23,10 +23,10 @@ export const colors = {
 
 export const typography = {
   fontFamily: {
-    regular: "PlusJakartaSans-Regular",
-    medium: "PlusJakartaSans-Medium",
-    semibold: "PlusJakartaSans-SemiBold",
-    bold: "PlusJakartaSans-Bold",
+    regular: "PlusJakartaSans_400Regular",
+    medium: "PlusJakartaSans_500Medium",
+    semibold: "PlusJakartaSans_600SemiBold",
+    bold: "PlusJakartaSans_700Bold",
   },
   size: {
     xs: 12,
