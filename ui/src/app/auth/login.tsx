@@ -1,5 +1,12 @@
-import { Text } from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text } from "react-native";
 
 export default function LoginScreen() {
-  return <Text>Welcome to Login Page</Text>;
+  return (
+    <KeyboardAvoidingView>
+      {/* CREATE A CUSTOM CONTAINER FOR LOGIN FORM */}
+      <ScrollView>
+        <Text>Login</Text>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }

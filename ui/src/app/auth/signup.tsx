@@ -1,5 +1,13 @@
-import { Text } from "react-native";
+import { globalStyles, typography } from "@/constants/theme";
+import { KeyboardAvoidingView, ScrollView, Text } from "react-native";
 
 export default function SignupScreen() {
-  return <Text>Welcome to Sign up page</Text>;
+  return (
+    <KeyboardAvoidingView>
+      {/* CREATE A CUSTOM CONTAINER FOR SIGN UP FORM */}
+      <ScrollView>  
+        <Text style={globalStyles.h1}>Sign Up</Text>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }

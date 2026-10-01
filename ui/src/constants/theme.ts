@@ -18,6 +18,7 @@ export const colors = {
     border: "#E2E8F0", // Input outlines & subtle card dividers
     background: "#F8FAFC", // Screen background color
     card: "#FFFFFF", // Card background
+    white: "#FFFFFF",
   },
 };
 
@@ -83,8 +84,33 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "stretch",
   },
   primaryButtonText: {
-    color: "#FFFFFF",
+    color: colors.neutral.white,
     fontSize: typography.size.md,
     fontFamily: typography.fontFamily.bold,
+  },
+  h1: {
+    fontFamily: typography.fontFamily.bold,
+    fontSize: typography.size.title,
+    color: colors.primary,
+  },
+  h2: {
+    fontFamily: typography.fontFamily.semibold,
+    fontSize: typography.size.xxl,
+    color: colors.primary,
+  },
+  h3: {
+    fontFamily: typography.fontFamily.semibold,
+    fontSize: typography.size.lg,
+    color: colors.primary,
+  },
+  body: {
+    fontFamily: typography.fontFamily.regular,
+    fontSize: typography.size.sm,
+    color: colors.neutral.body,
+  },
+  caption: {
+    fontFamily: typography.fontFamily.medium,
+    fontSize: typography.size.xs,
+    color: colors.neutral.placeholder,
   },
 });
