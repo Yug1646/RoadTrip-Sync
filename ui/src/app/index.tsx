@@ -1,9 +1,12 @@
 /* 
-  TODO: Redirect user to login and signup links
+  TODO: Redirect user signup link
 */
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, spacing, typography } from "@/constants/theme";
+import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
+
+const router = useRouter();
 
 export default function Index() {
   return (
@@ -12,10 +15,15 @@ export default function Index() {
       <Text style={styles.subtitle}>
         Stay together. Wherever the road takes you.
       </Text>
-      <PrimaryButton label="Get Started →" />
+      <PrimaryButton
+        label="Get Started →"
+        onPress={() => router.replace("/auth/signup")}
+      />
       <View style={styles.row}>
         <Text style={styles.footerText}>Already have an account?</Text>
-        <Text style={styles.footerLink}>Log in</Text>
+        <Text style={styles.footerLink}>
+          <Link href="/auth/login">Login</Link>
+        </Text>
       </View>
     </View>
   );

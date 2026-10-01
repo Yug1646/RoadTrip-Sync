@@ -3,11 +3,12 @@ import { TouchableOpacity, Text } from "react-native";
 
 type PrimaryButtonProps = {
   label: string;
+  onPress?: () => void;
 };
 
-export default function PrimaryButton({ label }: PrimaryButtonProps) {
+export default function PrimaryButton({ label, onPress }: PrimaryButtonProps) {
   return (
-    <TouchableOpacity style={globalStyles.primaryButton}>
+    <TouchableOpacity style={globalStyles.primaryButton} onPress={onPress}>
       <Text style={globalStyles.primaryButtonText}>{label}</Text>
     </TouchableOpacity>
   );
