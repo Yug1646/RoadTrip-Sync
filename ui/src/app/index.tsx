@@ -14,7 +14,7 @@ export default function Index() {
       </Text>
       <PrimaryButton
         label="Get Started →"
-        onPress={() => router.replace("/auth/signup")}
+        onPress={() => router.push("/auth/signup")}
       />
       <View style={styles.row}>
         <Text style={styles.footerText}>Already have an account?</Text>

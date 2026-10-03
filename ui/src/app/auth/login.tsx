@@ -1,3 +1,4 @@
+import { globalStyles } from "@/constants/theme";
 import { KeyboardAvoidingView, ScrollView, Text } from "react-native";
 
 export default function LoginScreen() {
@@ -5,7 +6,7 @@ export default function LoginScreen() {
     <KeyboardAvoidingView>
       {/* CREATE A CUSTOM CONTAINER FOR LOGIN FORM */}
       <ScrollView>
-        <Text>Login</Text>
+        <Text style={globalStyles.h1}>Login</Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );
