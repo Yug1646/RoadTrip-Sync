@@ -1,6 +1,3 @@
-/* 
-  TODO: Redirect user signup link
-*/
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, spacing, typography } from "@/constants/theme";
 import { Link, useRouter } from "expo-router";
