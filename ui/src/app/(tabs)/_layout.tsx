@@ -1,3 +1,6 @@
+/*
+  TODO: Add user profile photo
+*/
 import { colors } from "@/constants/theme";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -8,6 +11,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: true,
+        headerTitleAlign: "center",
         tabBarActiveTintColor: colors.secondary,
         tabBarInactiveTintColor: colors.neutral.placeholder,
         tabBarStyle: { backgroundColor: colors.neutral.card, height: 60 },
@@ -40,6 +44,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      {/* ----- ADD A PROFILE PHOTO OF THE USER FOR ALL SCREENS -----*/}
     </Tabs>
   );
 }
