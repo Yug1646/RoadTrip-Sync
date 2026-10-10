@@ -3,9 +3,8 @@ import { colors, spacing, typography } from "@/constants/theme";
 import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 
-const router = useRouter();
-
 export default function Index() {
+  const router = useRouter();
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>RoadTrip Sync</Text>
@@ -14,12 +13,12 @@ export default function Index() {
       </Text>
       <PrimaryButton
         label="Get Started →"
-        onPress={() => router.push("/auth/signup")}
+        onPress={() => router.push("/auth")}
       />
       <View style={styles.row}>
         <Text style={styles.footerText}>Already have an account?</Text>
         <Text style={styles.footerLink}>
-          <Link href="/auth/login">Login</Link>
+          <Link href="/auth">Login</Link>
         </Text>
       </View>
     </View>
