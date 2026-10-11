@@ -113,4 +113,10 @@ export const globalStyles = StyleSheet.create({
     fontSize: typography.size.xs,
     color: colors.neutral.placeholder,
   },
+  link: {
+    fontSize: typography.size.sm,
+    fontFamily: typography.fontFamily.bold,
+    color: colors.secondary,
+    textDecorationLine: "underline",
+  },
 });

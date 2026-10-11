@@ -13,10 +13,11 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 ## Current State
 
 - Theme system in `src/constants/theme.ts`: brand palette (navy `#0F2942` / orange `#FF6B35` / teal `#2A7B9B`), typography tokens (Plus Jakarta Sans, loaded in root layout), spacing, radii, and shared `globalStyles` (text roles `h1`/`h2`/`h3`/`body`/`caption`, card, primary button). Screens never hardcode fonts — they use style roles.
-- `PrimaryButton` component (`src/components/`) with `label` + optional `onPress` props.
+- `PrimaryButton` component (`src/components/`) with `label`, optional `onPress`, and optional `icon` (ReactNode) props.
 - Welcome screen complete; auth navigation conventions: `router.push` into auth flows, `router.replace` reserved for post-login.
+- Auth screen complete (`/auth` — single route, mode is in-screen state): Log In / Sign Up slider, controlled inputs (username only in signup), password visibility toggle, leading input icons, fake validation (required fields + min-8 password on signup) → `router.replace("/home")`.
 - Tab bar (Home / Trips / Profile) with brand tints and render-prop icons.
-- All other screens (`auth/`, `trip/`, remaining tabs) are stubs.
+- Remaining screens (`trip/`, remaining tabs) are stubs.
 
 ## Phase 4 Plan
 
@@ -32,7 +33,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 
 All screens built with **static hardcoded data that mirrors the real API response shapes** (`toTripResponse`, roster with `driverName`, location objects). Includes a fake auth flow (any credentials → fake token → route protection) so screens and navigation are complete without the backend.
 
-Immediate next: login form with controlled inputs (`useState`) → signup → health milestone.
+Auth UI is done. Immediate next: fake auth flow (any credentials → fake token in SecureStore → route protection) → `src/services/api.ts` → `GET /health` milestone.
 
 ## Phase 6 Plan (November)
 
@@ -42,6 +43,7 @@ Static → dynamic: swap mock data for real API calls (auth first, then trips, t
 
 - `app/` is the reserved Expo Router directory (routes only). Everything else lives in `src/`.
 - Layouts: root `_layout.tsx` (fonts + stack, wraps everything), `(tabs)/_layout.tsx` (bottom tab bar), `auth/` and `trip/` currently rely on the root stack.
+- Auth is a single route: `app/auth/index.tsx` → `/auth`. Log In / Sign Up switching is component state, not navigation. Submit currently runs fake checks; real validation arrives with the API in Phase 6.
 - `app.json`: all template image references removed (files did not exist). Brand icons (1024×1024 logo, splash, favicon, Android adaptive) must be added **before the first EAS build**. Splash is solid navy until then.
 - Deep-link scheme: `roadtripsync://`.
 - `.env` is gitignored. `EXPO_PUBLIC_API_URL` = `http://localhost:8080/api` for web, `http://<PC-LAN-IP>:8080/api` for physical device testing.
