@@ -5,13 +5,18 @@ import { colors, borderRadius, spacing, typography } from "@/constants/theme";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
+import { Image } from "expo-image";
 import { Text, View, StyleSheet } from "react-native";
 
 function HeaderTitle({ title }: { title: string }) {
   return (
     <View style={styles.headerTitleRow}>
       <View style={styles.logoMark}>
-        <Text style={styles.logoText}>RTS</Text>
+        <Image
+          source={require("../../../assets/images/appLogo.png")}
+          style={styles.logoImage}
+          contentFit="fill"
+        />
       </View>
       <Text style={styles.headerTitleText}>{title}</Text>
     </View>
@@ -81,14 +86,15 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: borderRadius.md,
-    backgroundColor: colors.primary,
+    borderWidth: 1,
+    borderColor: colors.neutral.title,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
-  logoText: {
-    fontSize: typography.size.sm,
-    fontFamily: typography.fontFamily.bold,
-    color: colors.secondary,
+  logoImage: {
+    width: 28,
+    height: 28,
   },
   headerTitleText: {
     fontSize: typography.size.lg,

@@ -74,7 +74,7 @@ export default function HomeScreen() {
         <View style={styles.joinRow}>
           <TextInput
             style={styles.joinInput}
-            placeholder="e.g. PAC-892"
+            placeholder="e.g. PAC892"
             placeholderTextColor={colors.neutral.placeholder}
             autoCapitalize="characters"
             value={joinCode}
