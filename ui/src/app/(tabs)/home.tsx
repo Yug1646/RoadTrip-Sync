@@ -18,27 +18,12 @@ import {
 } from "@/constants/theme";
 import TripCard from "@/components/trips/TripCard";
 import { trips } from "@/data/trips";
-import type { TripStatus } from "@/types/trip";
-
-type Filter = "all" | TripStatus;
-
-const CHIPS: { key: Filter; label: string }[] = [
-  { key: "all", label: "All Trips" },
-  { key: "active", label: "Active" },
-  { key: "planned", label: "Planned" },
-  { key: "completed", label: "Completed" },
-];
 
 export default function HomeScreen() {
-  const [filter, setFilter] = useState<Filter>("all");
   const [joinCode, setJoinCode] = useState("");
   const router = useRouter();
 
-  const countFor = (status: TripStatus) =>
-    trips.filter((trip) => trip.status === status).length;
-
-  const visibleTrips =
-    filter === "all" ? trips : trips.filter((trip) => trip.status === filter);
+  const activeTrips = trips.filter((trip) => trip.status === "active");
 
   return (
     <ScrollView
@@ -49,9 +34,7 @@ export default function HomeScreen() {
       {/* Greeting View */}
       <View style={styles.greetingRow}>
         <View style={styles.greetingBlock}>
-          <Text style={globalStyles.h1}>
-            Good morning,{"\n"}Yug
-          </Text>
+          <Text style={globalStyles.h1}>Good morning,{"\n"}Yug</Text>
           <Text style={globalStyles.body}>Ready for your next trip?</Text>
         </View>
       </View>
@@ -108,40 +91,29 @@ export default function HomeScreen() {
       <View style={styles.sectionHeader}>
         <Text style={globalStyles.h2}>Your Trips</Text>
         <View style={styles.countBadge}>
-          <Text style={styles.countText}>{trips.length}</Text>
-        </View>
-        <View style={styles.sortRow}>
-          <Text style={styles.sortText}>Active First</Text>
-          <Feather name="sliders" size={12} color={colors.secondary} />
+          <Text style={styles.countText}>{activeTrips.length}</Text>
         </View>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.chipRow}
-      >
-        {CHIPS.map((chip) => {
-          const isActive = filter === chip.key;
-          const count = chip.key === "all" ? trips.length : countFor(chip.key);
-          return (
-            <Pressable
-              key={chip.key}
-              style={[styles.chip, isActive && styles.chipActive]}
-              onPress={() => setFilter(chip.key)}
-            >
-              <Text style={[styles.chipText, isActive && styles.chipTextActive]}>
-                {chip.key === "all" ? chip.label : `${chip.label} (${count})`}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-
       <View style={styles.tripList}>
-        {visibleTrips.map((trip) => (
+        {activeTrips.map((trip) => (
           <TripCard key={trip.id} trip={trip} />
         ))}
+        {activeTrips.length === 0 && (
+          <View style={styles.emptyState}>
+            <Feather name="map" size={28} color={colors.neutral.placeholder} />
+            <Text style={styles.emptyTitle}>No active trip right now</Text>
+            <Text style={globalStyles.body}>
+              Start one and it will show up here live.
+            </Text>
+            <Pressable
+              style={styles.emptyButton}
+              onPress={() => router.push("/trip/create")}
+            >
+              <Text style={styles.emptyButtonText}>Start a Trip</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
 
       <View style={styles.ctaCard}>
@@ -154,7 +126,10 @@ export default function HomeScreen() {
           perfectly in sync.
         </Text>
         <View style={styles.ctaButtons}>
-          <Pressable style={styles.ctaPrimary} onPress={() => router.push("/trip/create")}>
+          <Pressable
+            style={styles.ctaPrimary}
+            onPress={() => router.push("/trip/create")}
+          >
             <Text style={styles.ctaPrimaryText}>Create Convoy</Text>
           </Pressable>
           <Pressable style={styles.ctaSecondary}>
@@ -318,44 +293,34 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
     fontFamily: typography.fontFamily.bold,
   },
-  sortRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-    marginLeft: "auto",
+  tripList: {
+    gap: spacing.md,
   },
-  sortText: {
-    fontSize: typography.size.xs,
-    color: colors.secondary,
-    fontFamily: typography.fontFamily.medium,
-  },
-  chipRow: {
-    gap: spacing.sm,
-    paddingRight: spacing.lg,
-  },
-  chip: {
+  emptyState: {
     backgroundColor: colors.neutral.card,
     borderWidth: 1,
     borderColor: colors.neutral.border,
-    borderRadius: borderRadius.full,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs + 2,
+    borderRadius: borderRadius.lg,
+    padding: spacing.xl,
+    alignItems: "center",
+    gap: spacing.xs,
   },
-  chipActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-  },
-  chipText: {
-    fontSize: typography.size.xs,
-    color: colors.primary,
-    fontFamily: typography.fontFamily.medium,
-  },
-  chipTextActive: {
-    color: colors.neutral.white,
+  emptyTitle: {
+    fontSize: typography.size.md,
     fontFamily: typography.fontFamily.bold,
+    color: colors.primary,
   },
-  tripList: {
-    gap: spacing.md,
+  emptyButton: {
+    backgroundColor: colors.secondary,
+    borderRadius: borderRadius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  emptyButtonText: {
+    fontSize: typography.size.xs,
+    fontFamily: typography.fontFamily.bold,
+    color: colors.neutral.white,
   },
   ctaCard: {
     backgroundColor: colors.tertiaryLight,
