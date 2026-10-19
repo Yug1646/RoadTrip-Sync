@@ -25,6 +25,10 @@ export default function HomeScreen() {
 
   const activeTrips = trips.filter((trip) => trip.status === "active");
 
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
   return (
     <ScrollView
       style={styles.screen}
@@ -34,7 +38,9 @@ export default function HomeScreen() {
       {/* Greeting View */}
       <View style={styles.greetingRow}>
         <View style={styles.greetingBlock}>
-          <Text style={globalStyles.h1}>Good morning,{"\n"}Yug</Text>
+          <Text style={globalStyles.h1}>
+            {greeting},{"\n"}Yug
+          </Text>
           <Text style={globalStyles.body}>Ready for your next trip?</Text>
         </View>
       </View>
@@ -81,7 +87,15 @@ export default function HomeScreen() {
             onChangeText={setJoinCode}
             maxLength={6}
           />
-          <Pressable style={styles.joinButton}>
+          <Pressable
+            style={styles.joinButton}
+            onPress={() =>
+              router.push({
+                pathname: "/trip/join",
+                params: { code: joinCode },
+              })
+            }
+          >
             <Text style={styles.joinButtonText}>Join</Text>
             <Feather name="send" size={14} color={colors.primary} />
           </Pressable>

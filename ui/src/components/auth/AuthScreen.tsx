@@ -37,6 +37,7 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
     if (mode === "signup" && !username.trim()) return;
     if (!email.trim() || !password.trim()) return;
     if (mode === "signup" && password.trim().length < 8) return;
+    router.dismissAll();
     router.replace("/home");
   };
 

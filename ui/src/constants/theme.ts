@@ -4,7 +4,6 @@ export const colors = {
   // Brand Palette
   primary: "#0F2942", // Deep Navy (Headers, main logo, dark cards)
   secondary: "#FF6B35", // Vibrant Orange (Primary action buttons, active states)
-  secondaryDark: "#B34700", // Burnt Orange (Heavy-action buttons, selected mode chips)
   tertiary: "#2A7B9B", // Route Teal (Maps, route blue badges, transport icons)
 
   // Surface Tints (For light badge backgrounds & highlighted pills)

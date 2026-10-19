@@ -1,8 +1,7 @@
-import { useState, type ComponentProps } from "react";
+import { useState } from "react";
 import { useRouter } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Image } from "expo-image";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -21,22 +20,10 @@ import {
   spacing,
   typography,
 } from "@/constants/theme";
+import { MODE_OPTIONS } from "@/constants/modes";
+import AppHeader from "@/components/ui/AppHeader";
 import { generateJoinCode } from "@/utils/joinCode";
 import type { TravelMode } from "@/types/trip";
-
-type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
-
-const MODE_OPTIONS: {
-  value: TravelMode;
-  label: string;
-  icon: MaterialIconName;
-}[] = [
-  { value: "car", label: "Car", icon: "directions-car" },
-  { value: "motorcycle", label: "Motorcycle", icon: "two-wheeler" },
-  { value: "public_transport", label: "Transit", icon: "directions-bus" },
-  { value: "walk", label: "Walk", icon: "directions-walk" },
-  { value: "other", label: "Custom", icon: "tune" },
-];
 
 export default function CreateScreen() {
   const [tripName, setTripName] = useState("");
@@ -74,19 +61,7 @@ export default function CreateScreen() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.headerRow}>
-            <View style={styles.headerLogo}>
-              <Image
-                source={require("../../../assets/images/appLogo.png")}
-                style={styles.headerLogoImage}
-                contentFit="fill"
-              />
-            </View>
-            <Text style={styles.headerTitle}>Active Route Details</Text>
-            <View style={styles.headerAvatar}>
-              <Text style={styles.headerAvatarText}>Y</Text>
-            </View>
-          </View>
+          <AppHeader title="Create Trip" />
 
           <View style={styles.pillRow}>
             <View
@@ -374,44 +349,6 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     paddingBottom: spacing.xl,
   },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-  },
-  headerLogo: {
-    width: 30,
-    height: 30,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    borderColor: colors.neutral.title,
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
-  headerLogoImage: {
-    width: 28,
-    height: 28,
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: typography.size.lg,
-    fontFamily: typography.fontFamily.bold,
-    color: colors.primary,
-  },
-  headerAvatar: {
-    width: 34,
-    height: 34,
-    borderRadius: borderRadius.full,
-    backgroundColor: colors.secondary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerAvatarText: {
-    fontSize: typography.size.sm,
-    fontFamily: typography.fontFamily.bold,
-    color: colors.neutral.white,
-  },
   pillRow: {
     flexDirection: "row",
     gap: spacing.sm,
@@ -478,7 +415,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs + 2,
   },
   modeChipActive: {
-    backgroundColor: colors.secondaryDark,
+    backgroundColor: colors.secondary,
   },
   modeChipText: {
     fontSize: typography.size.xs,
@@ -494,7 +431,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: spacing.xs,
-    backgroundColor: colors.secondaryDark,
+    backgroundColor: colors.secondary,
     borderRadius: borderRadius.md,
     paddingVertical: spacing.md,
     marginTop: spacing.xs,
