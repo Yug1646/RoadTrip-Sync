@@ -2,11 +2,12 @@ import PrimaryButton from "@/components/PrimaryButton";
 import { colors, globalStyles, spacing } from "@/constants/theme";
 import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Text style={[globalStyles.h1, styles.title]}>RoadTrip Sync</Text>
       <Text style={[globalStyles.h3, styles.subtitle]}>
         Stay together. Wherever the road takes you
@@ -21,7 +22,7 @@ export default function Index() {
           <Link href="/auth">Login</Link>
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

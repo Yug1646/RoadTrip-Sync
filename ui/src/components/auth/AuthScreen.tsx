@@ -9,6 +9,7 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   globalStyles,
   borderRadius,
@@ -40,10 +41,11 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={styles.screen}
-    >
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.screen}
+      >
       {/* ---------- ADD LOGO ---------- */}
       <Text style={[globalStyles.h1, styles.title]}>RoadTrip Sync</Text>
       <Text style={[globalStyles.body, styles.subtitle]}>
@@ -185,14 +187,18 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
           Designed for group drivers and road convoys.
         </Text>
       </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  safeArea: {
     flex: 1,
     backgroundColor: colors.neutral.background,
+  },
+  screen: {
+    flex: 1,
     padding: spacing.lg,
     gap: spacing.md,
     justifyContent: "center",

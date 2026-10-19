@@ -1,5 +1,7 @@
 export type TripStatus = "active" | "planned" | "completed";
 
+export type TravelMode = "car" | "motorcycle" | "public_transport" | "walk" | "other";
+
 export type TripMember = {
   initial: string;
 };
