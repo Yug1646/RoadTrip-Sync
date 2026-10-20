@@ -21,6 +21,8 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 - **Create Trip** (`/trip/create`): two-state screen (form → created reveal), travel-mode chips mapped to backend enums (`TravelMode` in `types/trip.ts`), conditional Transit Name field, fake 6-char join code (`utils/joinCode.ts`, ambiguous chars excluded — server provides the real code in Phase 6).
 - **Join Trip** (`/trip/join`): 6-box code input (array state + refs: auto-advance, backspace-to-previous, paste support), verified trip preview (static — any complete code verifies), 2-col travel-mode grid, vehicle nickname, fake checks → `router.replace("/trip/details")`. Receives a pre-filled code from Home's Join card via **navigation params** (`useLocalSearchParams`).
 - Auth transition: login/signup ends with `router.dismissAll()` + `router.replace("/home")` so Home becomes the stack root — back-swipe can never reveal Welcome.
+- **Auth is real**: register/login hit the backend (`/api/auth/*`), the JWT is stored via `services/token.ts` (SecureStore on native, localStorage on web — SecureStore has no web implementation), and `apiFetch` auto-attaches `Authorization: Bearer <token>` to every request.
+- **Route protection**: root layout boot-gates on a `loadToken()` read (no flash of wrong screen), then a guard effect enforces the rules on every navigation — no token + protected route → `/auth`; token + public route → `/home`. Log Out clears the token and returns to Welcome.
 - Tab bar (Home / Trips / Profile) with brand tints, render-prop icons, logo + avatar header on all tabs.
 - Brand asset bundled: `assets/images/appLogo.png` (header logo). App icon / splash / favicon still pending 1024×1024 export — required before first EAS build.
 - Layout convention: tab screens use the native header; **custom screens use `SafeAreaView` → `KeyboardAvoidingView` → `ScrollView`** (keyboard-safe, notch-safe).
@@ -40,7 +42,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 
 All screens built with **static hardcoded data that mirrors the real API response shapes** (`toTripResponse`, roster with `driverName`, location objects). Includes a fake auth flow (any credentials → fake token → route protection) so screens and navigation are complete without the backend.
 
-Auth UI is done and all three tabs are built. Static-phase remaining: `trip/details`, `trip/live-map`. Then Phase 5 proper: fake auth flow (fake token in SecureStore → route protection) → `src/services/api.ts` → `GET /health` milestone.
+All three tabs, create trip, and join trip are built; the auth flow is **real** (backend + persistent token + route protection) — the original "fake auth" plan was superseded. Remaining before Phase 6 dynamic screens: `trip/details`, `trip/live-map` (Mappls + sockets defer to Phase 6; a static shell is the option on the table). The dynamic-data groundwork is done: `apiFetch` wrapper, health milestone ✓, real auth ✓.
 
 ## Phase 6 Plan (November)
 

@@ -20,6 +20,7 @@ import {
 import Feather from "@expo/vector-icons/Feather";
 import PrimaryButton from "@/components/PrimaryButton";
 import { apiFetch } from "@/services/api";
+import { saveToken } from "@/services/token";
 
 type Mode = "login" | "signup";
 type AuthScreenProps = {
@@ -27,7 +28,7 @@ type AuthScreenProps = {
 };
 type AuthResponse = {
   user?: unknown;
-  token?: string;
+  token: string;
 };
 
 export default function AuthScreen({ initialMode }: AuthScreenProps) {
@@ -49,15 +50,17 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
           method: "POST",
           body: JSON.stringify({ email, username, password }),
         });
-        console.log("Register Success:", response);
+        saveToken(response.token);
+        console.log("Register Success", response);
       } else {
         const response = await apiFetch<AuthResponse>("/api/auth/login", {
           method: "POST",
           body: JSON.stringify({ email, password }),
         });
-        console.log("Login Success:", response);
+        saveToken(response.token);
+        console.log("Login Success", response);
       }
-      router.dismissAll();
+      if (Platform.OS !== "web") router.dismissAll();
       router.replace("/home");
     } catch (error) {
       console.log(

@@ -9,6 +9,7 @@ import {
   typography,
 } from "@/constants/theme";
 import { trips } from "@/data/trips";
+import { clearToken } from "@/services/token";
 
 const PREFERENCES = [
   {
@@ -33,8 +34,8 @@ const PREFERENCES = [
     trailing: "Car",
   },
 ];
-
 export default function ProfileScreen() {
+  
   const router = useRouter();
   const activeVehicles = trips.filter(
     (trip) => trip.status === "active",
@@ -47,6 +48,7 @@ export default function ProfileScreen() {
   ];
 
   const handleLogout = () => {
+    clearToken();
     router.replace("/");
   };
 
