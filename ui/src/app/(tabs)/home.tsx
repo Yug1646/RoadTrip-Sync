@@ -18,6 +18,17 @@ import {
 } from "@/constants/theme";
 import TripCard from "@/components/trips/TripCard";
 import { trips } from "@/data/trips";
+import { useEffect } from "react";
+import { apiFetch } from "@/services/api";
+
+type HealthResponse = { status: string };
+useEffect(() => {
+  apiFetch<HealthResponse>("/health")
+    .then((data) => console.log("SUCCESS:", data))
+    .catch((error) =>
+      console.log("FAILED:", error instanceof Error ? error.message : error),
+    );
+}, []);
 
 export default function HomeScreen() {
   const [joinCode, setJoinCode] = useState("");
