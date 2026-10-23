@@ -10,6 +10,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+//? Components & Styles
 import {
   globalStyles,
   borderRadius,
@@ -17,15 +19,19 @@ import {
   spacing,
   typography,
 } from "@/constants/theme";
-import Feather from "@expo/vector-icons/Feather";
 import PrimaryButton from "@/components/PrimaryButton";
+import Feather from "@expo/vector-icons/Feather";
+
+//? Services
 import { apiFetch } from "@/services/api";
 import { saveToken } from "@/services/token";
 
 type Mode = "login" | "signup";
+
 type AuthScreenProps = {
   initialMode: Mode;
 };
+
 type AuthResponse = {
   user?: unknown;
   token: string;
