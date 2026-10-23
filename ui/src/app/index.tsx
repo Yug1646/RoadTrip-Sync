@@ -1,8 +1,10 @@
+import { Text, View, StyleSheet } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+//? ----- Components & Styles -----
 import PrimaryButton from "@/components/PrimaryButton";
 import { colors, globalStyles, spacing } from "@/constants/theme";
-import { Link, useRouter } from "expo-router";
-import { Text, View, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
