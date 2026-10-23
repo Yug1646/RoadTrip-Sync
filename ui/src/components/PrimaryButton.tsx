@@ -1,6 +1,8 @@
-import { globalStyles } from "@/constants/theme";
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 import type { ReactNode } from "react";
+import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+
+//? Styles
+import { globalStyles } from "@/constants/theme";
 
 type PrimaryButtonProps = {
   label: string;
