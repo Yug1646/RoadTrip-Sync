@@ -1,11 +1,5 @@
-import {
-  Feather,
-} from "@expo/vector-icons";
-import {
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { View, Text, StyleSheet } from "react-native";
 import {
   borderRadius,
   colors,
@@ -21,9 +15,21 @@ const STATUS_BADGE: Record<
   TripStatus,
   { bg: string; text: string; label: string }
 > = {
-  active: { bg: colors.secondaryLight, text: colors.secondary, label: "ACTIVE" },
-  planned: { bg: colors.neutral.card, text: colors.neutral.body, label: "PLANNED" },
-  completed: { bg: colors.tertiaryLight, text: colors.tertiary, label: "COMPLETED" },
+  active: {
+    bg: colors.secondaryLight,
+    text: colors.secondary,
+    label: "ACTIVE",
+  },
+  planned: {
+    bg: colors.neutral.card,
+    text: colors.neutral.body,
+    label: "PLANNED",
+  },
+  completed: {
+    bg: colors.tertiaryLight,
+    text: colors.tertiary,
+    label: "COMPLETED",
+  },
 };
 
 export default function TripCard({ trip }: { trip: Trip }) {
@@ -86,7 +92,10 @@ export default function TripCard({ trip }: { trip: Trip }) {
                   key={member.initial}
                   style={[
                     styles.avatar,
-                    { backgroundColor: AVATAR_COLORS[index % AVATAR_COLORS.length] },
+                    {
+                      backgroundColor:
+                        AVATAR_COLORS[index % AVATAR_COLORS.length],
+                    },
                   ]}
                 >
                   <Text style={styles.avatarText}>{member.initial}</Text>
@@ -94,7 +103,9 @@ export default function TripCard({ trip }: { trip: Trip }) {
               ))}
               {trip.extraMembers != null && (
                 <View style={[styles.avatar, styles.avatarExtra]}>
-                  <Text style={styles.avatarExtraText}>+{trip.extraMembers}</Text>
+                  <Text style={styles.avatarExtraText}>
+                    +{trip.extraMembers}
+                  </Text>
                 </View>
               )}
             </View>
