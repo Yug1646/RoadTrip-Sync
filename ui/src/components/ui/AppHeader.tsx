@@ -18,6 +18,7 @@ export default function AppHeader({ title }: AppHeaderProps) {
       </View>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.avatar}>
+        {/* User's profile photo or user's name first letter should be there */}
         <Text style={styles.avatarText}>Y</Text>
       </View>
     </View>
