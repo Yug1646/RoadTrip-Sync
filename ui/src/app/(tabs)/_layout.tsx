@@ -48,7 +48,7 @@ export default function TabLayout() {
           headerTitle: () => <HeaderTitle title="Home" />,
           headerRight: () => <UserAvatar />,
           tabBarIcon: ({ color, size }) => (
-            <Feather name="compass" size={size} color={color} />
+            <Feather name="compass" size={size} colors={color} />
           ),
         }}
       />
@@ -58,7 +58,7 @@ export default function TabLayout() {
           headerTitle: () => <HeaderTitle title="Trips" />,
           headerRight: () => <UserAvatar />,
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="alt-route" size={size} color={color} />
+            <MaterialIcons name="alt-route" size={size} colors={color} />
           ),
         }}
       />
@@ -68,7 +68,7 @@ export default function TabLayout() {
           headerTitle: () => <HeaderTitle title="Profile" />,
           headerRight: () => <UserAvatar />,
           tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
+            <Feather name="user" size={size} colors={color} />
           ),
         }}
       />
