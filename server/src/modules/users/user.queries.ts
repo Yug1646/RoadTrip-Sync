@@ -1,10 +1,13 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
 
-//? Find User By Email
+//? Find User By Email (case-insensitive — legacy rows may hold mixed case)
 export const findUserByEmail = async (email: string) => {
-  const [user] = await db.select().from(users).where(eq(users.email, email));
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(sql`lower(${users.email}) = ${email.toLowerCase()}`);
   return user ?? null;
 };
 

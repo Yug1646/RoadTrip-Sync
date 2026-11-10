@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type ComponentRef } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -41,7 +41,7 @@ export default function JoinScreen() {
   });
   const [mode, setMode] = useState<TravelMode>("car");
   const [nickname, setNickname] = useState("");
-  const inputRefs = useRef<(TextInput | null)[]>([]);
+  const inputRefs = useRef<(ComponentRef<typeof TextInput> | null)[]>([]);
   const router = useRouter();
 
   const codeString = code.join("");

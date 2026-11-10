@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import {
@@ -18,21 +18,30 @@ import {
 } from "@/constants/theme";
 import TripCard from "@/components/trips/TripCard";
 import { trips } from "@/data/trips";
-import { useEffect } from "react";
+
+//? Services
 import { apiFetch } from "@/services/api";
+import { getCurrentUser } from "@/services/users";
 
 type HealthResponse = { status: string };
 
 export default function HomeScreen() {
   const [joinCode, setJoinCode] = useState("");
+  const [username, setUsername] = useState("");
   const router = useRouter();
 
   useEffect(() => {
+    //* To Check health
     apiFetch<HealthResponse>("/health")
       .then((data) => console.log("SUCCESS:", data))
       .catch((error) =>
         console.log("FAILED:", error instanceof Error ? error.message : error),
       );
+
+    //* To get Current user
+    getCurrentUser()
+      .then((user) => setUsername(user.username))
+      .catch((err) => console.log(`User Failed: ${err.message}`));
   }, []);
 
   const activeTrips = trips.filter((trip) => trip.status === "active");
@@ -40,7 +49,6 @@ export default function HomeScreen() {
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-
   return (
     <ScrollView
       style={styles.screen}
@@ -51,7 +59,8 @@ export default function HomeScreen() {
       <View style={styles.greetingRow}>
         <View style={styles.greetingBlock}>
           <Text style={globalStyles.h1}>
-            {greeting},{"\n"}Yug
+            {greeting},{"\n"}
+            {username}
           </Text>
           <Text style={globalStyles.body}>Ready for your next trip?</Text>
         </View>
