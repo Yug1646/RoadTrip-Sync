@@ -41,3 +41,8 @@ export type CreateTripPayload = {
   endLocation: string;
   type: TravelMode;
 };
+
+export type JoinTripPayload = {
+  joinCode: string;
+  type: TravelMode;
+};

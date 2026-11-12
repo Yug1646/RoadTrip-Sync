@@ -23,6 +23,7 @@ import {
 import { MODE_OPTIONS } from "@/constants/modes";
 import AppHeader from "@/components/ui/AppHeader";
 import type { TravelMode } from "@/types/trip";
+import { joinTrip } from "@/services/trips";
 
 const CODE_LENGTH = 6;
 
@@ -36,11 +37,12 @@ export default function JoinScreen() {
       .split("");
     return Array.from(
       { length: CODE_LENGTH },
-      (_, index) => chars[index] ?? ""
+      (_, index) => chars[index] ?? "",
     );
   });
   const [mode, setMode] = useState<TravelMode>("car");
   const [nickname, setNickname] = useState("");
+  const [joinError, setJoinError] = useState<string | null>(null);
   const inputRefs = useRef<(ComponentRef<typeof TextInput> | null)[]>([]);
   const router = useRouter();
 
@@ -75,9 +77,16 @@ export default function JoinScreen() {
     inputRefs.current[index - 1]?.focus();
   };
 
-  const handleJoin = () => {
-    if (!isCodeComplete || !nickname.trim()) return;
-    router.replace("/trip/details");
+  const handleJoin = async () => {
+    if (!isCodeComplete) return;
+    try {
+      await joinTrip({ joinCode: codeString, type: mode });
+      router.replace("/trip/details");
+    } catch (error) {
+      setJoinError(
+        error instanceof Error ? error.message : "Something went wrong",
+      );
+    }
   };
 
   return (
@@ -104,7 +113,9 @@ export default function JoinScreen() {
                 style={[styles.codeBox, char !== "" && styles.codeBoxFilled]}
                 value={char}
                 onChangeText={(text) => handleChange(index, text)}
-                onKeyPress={(event) => handleBackspace(index, event.nativeEvent.key)}
+                onKeyPress={(event) =>
+                  handleBackspace(index, event.nativeEvent.key)
+                }
                 maxLength={CODE_LENGTH}
                 autoCapitalize="characters"
                 autoCorrect={false}
@@ -117,7 +128,11 @@ export default function JoinScreen() {
               <View style={styles.previewHeader}>
                 <Text style={globalStyles.h3}>Pacific Coast Cruise</Text>
                 <View style={styles.verifiedPill}>
-                  <Feather name="check-circle" size={12} color={colors.tertiary} />
+                  <Feather
+                    name="check-circle"
+                    size={12}
+                    color={colors.tertiary}
+                  />
                   <Text style={styles.verifiedPillText}>Verified</Text>
                 </View>
               </View>
@@ -147,7 +162,9 @@ export default function JoinScreen() {
                   <Feather
                     name={isSelected ? "check-circle" : "circle"}
                     size={16}
-                    color={isSelected ? colors.secondary : colors.neutral.placeholder}
+                    color={
+                      isSelected ? colors.secondary : colors.neutral.placeholder
+                    }
                   />
                   <MaterialIcons
                     name={option.icon}

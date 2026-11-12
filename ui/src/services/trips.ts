@@ -1,4 +1,9 @@
-import type { CreateTripPayload, Trip, TripResponse } from "@/types/trip";
+import type {
+  CreateTripPayload,
+  JoinTripPayload,
+  Trip,
+  TripResponse,
+} from "@/types/trip";
 import { apiFetch } from "./api";
 
 function toTrip(response: TripResponse): Trip {
@@ -23,6 +28,13 @@ export async function createTrip(
   payload: CreateTripPayload,
 ): Promise<TripResponse> {
   return apiFetch<TripResponse>("/api/trips", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function joinTrip(payload: JoinTripPayload): Promise<unknown> {
+  return apiFetch<unknown>("/api/trips/join", {
     method: "POST",
     body: JSON.stringify(payload),
   });
