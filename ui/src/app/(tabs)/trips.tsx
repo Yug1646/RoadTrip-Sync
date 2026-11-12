@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import {
   Pressable,
@@ -17,8 +17,8 @@ import {
 } from "@/constants/theme";
 import TripCard from "@/components/trips/TripCard";
 import FilterChips from "@/components/ui/FilterChips";
-import { trips } from "@/data/trips";
-import type { TripStatus } from "@/types/trip";
+import type { Trip, TripStatus } from "@/types/trip";
+import { getMyTrips } from "@/services/trips";
 
 type Filter = "all" | TripStatus;
 
@@ -32,6 +32,7 @@ const CHIPS: { key: Filter; label: string }[] = [
 export default function TripsScreen() {
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
+  const [trips, setTrips] = useState<Trip[]>([]);
 
   const countFor = (status: TripStatus) =>
     trips.filter((trip) => trip.status === status).length;
@@ -53,6 +54,17 @@ export default function TripsScreen() {
         trip.endLocation.toLowerCase().includes(q)
       );
     });
+
+  useEffect(() => {
+    getMyTrips()
+      .then(setTrips)
+      .catch((error) =>
+        console.log(
+          "TRIPS FAILED:",
+          error instanceof Error ? error.message : error,
+        ),
+      );
+  }, []);
 
   return (
     <ScrollView

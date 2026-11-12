@@ -17,17 +17,19 @@ import {
   typography,
 } from "@/constants/theme";
 import TripCard from "@/components/trips/TripCard";
-import { trips } from "@/data/trips";
+import type { Trip } from "@/types/trip";
 
 //? Services
 import { apiFetch } from "@/services/api";
 import { getCurrentUser } from "@/services/users";
+import { getMyTrips } from "@/services/trips";
 
 type HealthResponse = { status: string };
 
 export default function HomeScreen() {
   const [joinCode, setJoinCode] = useState("");
   const [username, setUsername] = useState("");
+  const [trips, setTrips] = useState<Trip[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -42,6 +44,11 @@ export default function HomeScreen() {
     getCurrentUser()
       .then((user) => setUsername(user.username))
       .catch((err) => console.log(`User Failed: ${err.message}`));
+
+    //* To get user's trips
+    getMyTrips()
+      .then(setTrips)
+      .catch((err) => console.log(`Trips Failed: ${err.message}`));
   }, []);
 
   const activeTrips = trips.filter((trip) => trip.status === "active");
@@ -123,6 +130,7 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      {/* User's Trips */}
       <View style={styles.sectionHeader}>
         <Text style={globalStyles.h2}>Your Trips</Text>
         <View style={styles.countBadge}>
