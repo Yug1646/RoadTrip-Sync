@@ -22,7 +22,9 @@ import {
 } from "@/constants/theme";
 import { MODE_OPTIONS } from "@/constants/modes";
 import AppHeader from "@/components/ui/AppHeader";
-import { generateJoinCode } from "@/utils/joinCode";
+
+//? Services
+import { createTrip } from "@/services/trips";
 import type { TravelMode } from "@/types/trip";
 
 export default function CreateScreen() {
@@ -38,17 +40,31 @@ export default function CreateScreen() {
   const selectedMode =
     MODE_OPTIONS.find((option) => option.value === mode) ?? MODE_OPTIONS[0];
 
-  const handleCreate = () => {
-    if (!tripName.trim() || !startLocation.trim() || !destination.trim())
-      return;
-    if (
-      (mode === "public_transport" || mode === "other") &&
-      !transitName.trim()
-    )
-      return;
-    setJoinCode(generateJoinCode(6));
+  const handleCreate = async () => {
+  if (!tripName.trim() || !startLocation.trim() || !destination.trim())
+    return;
+  if (
+    (mode === "public_transport" || mode === "other") &&
+    !transitName.trim()
+  )
+    return;
+
+  try {
+    const response = await createTrip({
+      name: tripName,
+      startLocation,
+      endLocation: destination,
+      type: mode,
+    });
+    setJoinCode(response.joinCode);
     setCreated(true);
-  };
+  } catch (error) {
+    console.log(
+      "CREATE FAILED:",
+      error instanceof Error ? error.message : error,
+    );
+  }
+};
 
   return (
     <SafeAreaView style={styles.screen}>

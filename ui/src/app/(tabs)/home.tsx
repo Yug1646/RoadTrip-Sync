@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import {
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -30,26 +31,52 @@ export default function HomeScreen() {
   const [joinCode, setJoinCode] = useState("");
   const [username, setUsername] = useState("");
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    //* To Check health
-    apiFetch<HealthResponse>("/health")
-      .then((data) => console.log("SUCCESS:", data))
-      .catch((error) =>
-        console.log("FAILED:", error instanceof Error ? error.message : error),
+  const loadHome = useCallback(async () => {
+    try {
+      const data = await apiFetch<HealthResponse>("/health");
+      console.log("SUCCESS:", data);
+    } catch (error) {
+      console.log(
+        "FAILED:",
+        error instanceof Error ? error.message : error,
       );
+    }
 
-    //* To get Current user
-    getCurrentUser()
-      .then((user) => setUsername(user.username))
-      .catch((err) => console.log(`User Failed: ${err.message}`));
+    try {
+      const user = await getCurrentUser();
+      setUsername(user.username);
+    } catch (error) {
+      console.log(
+        "User Failed:",
+        error instanceof Error ? error.message : error,
+      );
+    }
 
-    //* To get user's trips
-    getMyTrips()
-      .then(setTrips)
-      .catch((err) => console.log(`Trips Failed: ${err.message}`));
+    try {
+      const data = await getMyTrips();
+      setTrips(data);
+    } catch (error) {
+      console.log(
+        "Trips Failed:",
+        error instanceof Error ? error.message : error,
+      );
+    }
   }, []);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadHome();
+    setRefreshing(false);
+  }, [loadHome]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadHome();
+    }, [loadHome]),
+  );
 
   const activeTrips = trips.filter((trip) => trip.status === "active");
 
@@ -61,6 +88,14 @@ export default function HomeScreen() {
       style={styles.screen}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.secondary}
+          colors={[colors.secondary]}
+        />
+      }
     >
       {/* Greeting View */}
       <View style={styles.greetingRow}>

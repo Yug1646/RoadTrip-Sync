@@ -34,3 +34,10 @@ export type TripResponse = {
   createdBy: number;
   status: TripStatus;
 };
+
+export type CreateTripPayload = {
+  name: string;
+  startLocation: string;
+  endLocation: string;
+  type: TravelMode;
+};

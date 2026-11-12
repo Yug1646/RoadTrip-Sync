@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import {
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,7 @@ import {
 import TripCard from "@/components/trips/TripCard";
 import FilterChips from "@/components/ui/FilterChips";
 import type { Trip, TripStatus } from "@/types/trip";
+import { useFocusEffect } from "expo-router";
 import { getMyTrips } from "@/services/trips";
 
 type Filter = "all" | TripStatus;
@@ -33,6 +35,31 @@ export default function TripsScreen() {
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadTrips = useCallback(async () => {
+    try {
+      const data = await getMyTrips();
+      setTrips(data);
+    } catch (error) {
+      console.log(
+        "TRIPS FAILED:",
+        error instanceof Error ? error.message : error,
+      );
+    }
+  }, []);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadTrips();
+    setRefreshing(false);
+  }, [loadTrips]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTrips();
+    }, [loadTrips]),
+  );
 
   const countFor = (status: TripStatus) =>
     trips.filter((trip) => trip.status === status).length;
@@ -55,22 +82,19 @@ export default function TripsScreen() {
       );
     });
 
-  useEffect(() => {
-    getMyTrips()
-      .then(setTrips)
-      .catch((error) =>
-        console.log(
-          "TRIPS FAILED:",
-          error instanceof Error ? error.message : error,
-        ),
-      );
-  }, []);
-
   return (
     <ScrollView
       style={styles.screen}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.secondary}
+          colors={[colors.secondary]}
+        />
+      }
     >
       <View style={styles.searchWrap}>
         <Feather name="search" size={16} color={colors.neutral.placeholder} />
