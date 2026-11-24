@@ -8,7 +8,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 - Expo Router (file-based routing, tabs + stack)
 - Expo Secure Store (auth token — Phase 5)
 - Mappls SDK (maps — needs a development build, not Expo Go)
-- socket.io-client (live locations — Phase 6)
+- Tech Stack additions: `socket.io` (server), `socket.io-client` (UI), `expo-secure-store` (token), `expo-image`, `@expo/vector-icons`.
 
 ## Current State
 
@@ -23,6 +23,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 - Auth transition: login/signup ends with `router.dismissAll()` + `router.replace("/home")` so Home becomes the stack root — back-swipe can never reveal Welcome.
 - **Auth is real**: register/login hit the backend (`/api/auth/*`), the JWT is stored via `services/token.ts` (SecureStore on native, localStorage on web — SecureStore has no web implementation), and `apiFetch` auto-attaches `Authorization: Bearer <token>` to every request.
 - **Route protection**: root layout boot-gates on a `loadToken()` read (no flash of wrong screen), then a guard effect enforces the rules on every navigation — no token + protected route → `/auth`; token + public route → `/home`. Log Out clears the token and returns to Welcome.
+- **Realtime**: Socket.IO wired end to end — server attaches to the Express HTTP server (`sockets/socket.server.ts`) with JWT handshake auth (`verifyToken` in `utils/jwt.ts`, shared with HTTP middleware), client connects via `services/socket.ts` (token from cache, autoConnect off, connect at boot after token load + after fresh login). Rooms (`trip:<id>`) and `location:update` broadcast are next.
 - Tab bar (Home / Trips / Profile) with brand tints, render-prop icons, logo + avatar header on all tabs.
 - Brand asset bundled: `assets/images/appLogo.png` (header logo). App icon / splash / favicon still pending 1024×1024 export — required before first EAS build.
 - Layout convention: tab screens use the native header; **custom screens use `SafeAreaView` → `KeyboardAvoidingView` → `ScrollView`** (keyboard-safe, notch-safe).
