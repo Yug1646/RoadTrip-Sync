@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/plus-jakarta-sans";
 import { useEffect, useState } from "react";
 import { loadToken, getToken } from "@/services/token";
+import { connectSocket } from "@/services/socket";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -21,7 +22,10 @@ export default function RootLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    loadToken().then(() => setIsAuthReady(true));
+    loadToken().then(() => {
+      if (getToken()) connectSocket();
+      setIsAuthReady(true);
+    });
   }, []);
 
   useEffect(() => {

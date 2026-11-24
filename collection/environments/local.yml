@@ -7,4 +7,4 @@ variables:
   - name: userAToken
     value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NDQ3NjMxNCwiZXhwIjoxNzk0NTYyNzE0fQ.XoiIehv0VS4_sXw0AiM1jFBkrdTVDhd17pK5fmdBDmQ
   - name: userBToken
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc5NDQ3OTI0MiwiZXhwIjoxNzk0NTY1NjQyfQ.24UoRbb_o2_RmBq1EAaDZ91f_bdfDZPEmHRf7yfEy9w
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc5NTUwMzEyNywiZXhwIjoxNzk1NTg5NTI3fQ.IVpzwQqkNtakiNo0X-x_kw14CFqxJGXLFVH1EYRntOo

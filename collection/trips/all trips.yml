@@ -8,7 +8,7 @@ http:
   url: "{{basetrips}}/"
   auth:
     type: bearer
-    token: "{{userAToken}}"
+    token: "{{userBToken}}"
 
 settings:
   encodeUrl: true
