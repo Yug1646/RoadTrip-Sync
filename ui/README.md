@@ -19,11 +19,11 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 - **Trips** = full library: **real trips from `GET /api/trips`**, search + status chips (composed filters, derived from state), empty state. Refreshes on focus + pull-to-refresh.
 - **Profile** = identity block, telemetry stats (Active Vehicles derived from *static* trip data — migration pending), convoy preferences list, Log Out (clears token, real).
 - **Create Trip** (`/trip/create`): **real** — `POST /api/trips` with the Zod-schema payload (name, startLocation, endLocation, type from mode chips), conditional Transit Name field, reveals the **server-generated join code** (`utils/joinCode.ts` retired).
-- **Join Trip** (`/trip/join`): 6-box code input (array state + refs: auto-advance, backspace-to-previous, paste support), verified trip preview (still static — real `POST /api/trips/join` is the next task), 2-col travel-mode grid, vehicle nickname → `router.replace("/trip/details")`. Receives a pre-filled code from Home's Join card via **navigation params** (`useLocalSearchParams`).
+- **Join Trip** (`/trip/join`): **real** — 6-box code input (array state + refs: auto-advance, backspace-to-previous, paste support), `POST /api/trips/join` with `{ joinCode, type }`, server errors surfaced in-screen ("Invalid join code", "already joined"), vehicle row created server-side on success → `router.replace("/trip/details")`. Receives a pre-filled code from Home's Join card via **navigation params** (`useLocalSearchParams`).
 - Auth transition: login/signup ends with `router.dismissAll()` + `router.replace("/home")` so Home becomes the stack root — back-swipe can never reveal Welcome.
 - **Auth is real**: register/login hit the backend (`/api/auth/*`), the JWT is stored via `services/token.ts` (SecureStore on native, localStorage on web — SecureStore has no web implementation), and `apiFetch` auto-attaches `Authorization: Bearer <token>` to every request.
 - **Route protection**: root layout boot-gates on a `loadToken()` read (no flash of wrong screen), then a guard effect enforces the rules on every navigation — no token + protected route → `/auth`; token + public route → `/home`. Log Out clears the token and returns to Welcome.
-- **Realtime**: Socket.IO wired end to end — server attaches to the Express HTTP server (`sockets/socket.server.ts`) with JWT handshake auth (`verifyToken` in `utils/jwt.ts`, shared with HTTP middleware), client connects via `services/socket.ts` (token from cache, autoConnect off, connect at boot after token load + after fresh login). Rooms (`trip:<id>`) and `location:update` broadcast are next.
+- **Realtime**: Socket.IO wired end to end — server attaches to the Express HTTP server (`sockets/socket.server.ts`) with JWT handshake auth (`verifyToken` in `utils/jwt.ts`, shared with HTTP middleware), client connects via `services/socket.ts` (token from cache, autoConnect off, connect at boot after token load + after fresh login). **Rooms live**: `trip:join` + `member:joined` broadcast verified across two users; `location:update` handler ready (real coords in Week 2).
 - Tab bar (Home / Trips / Profile) with brand tints, render-prop icons, logo + avatar header on all tabs.
 - Brand asset bundled: `assets/images/appLogo.png` (header logo). App icon / splash / favicon still pending 1024×1024 export — required before first EAS build.
 - Layout convention: tab screens use the native header; **custom screens use `SafeAreaView` → `KeyboardAvoidingView` → `ScrollView`** (keyboard-safe, notch-safe).
@@ -44,7 +44,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 
 The original "fake auth" plan was superseded — the auth flow went **real** early (backend + persistent token + route protection), and dynamic trips read/create went live. `utils/joinCode.ts` and `data/trips.ts` are retired or pending retirement.
 
-Remaining: join trip → real `POST /api/trips/join`; then `trip/details`, `trip/live-map` (Mappls + sockets defer to Phase 6; a static shell is the option on the table).
+Remaining: `trip/details` full build (roster + Start Trip), `trip/live-map` (Mappls + sockets defer to Phase 6; static shell exists). The dynamic-data groundwork is done: `apiFetch` wrapper, health milestone ✓, real auth ✓, real trips read/create/join ✓.
 
 ## Phase 6 Plan (November)
 

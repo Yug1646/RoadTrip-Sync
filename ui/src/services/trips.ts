@@ -24,6 +24,10 @@ export async function getMyTrips(): Promise<Trip[]> {
   return data.map(toTrip);
 }
 
+export async function getTripById(tripId:string):Promise<TripResponse>{
+  return apiFetch<TripResponse>(`/api/trips/${tripId}`)
+}
+
 export async function createTrip(
   payload: CreateTripPayload,
 ): Promise<TripResponse> {
@@ -39,3 +43,4 @@ export async function joinTrip(payload: JoinTripPayload): Promise<unknown> {
     body: JSON.stringify(payload),
   });
 }
+

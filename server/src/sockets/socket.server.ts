@@ -25,6 +25,22 @@ export function initSocketServer(httpServer: HttpServer) {
     socket.on("disconnect", (reason) => {
       console.log("Client Disconnected: ", reason);
     });
+
+    socket.on("trip:join", ({ tripId }) => {
+      socket.join(`trip: ${tripId}`);
+      socket.data.tripId = tripId;
+      socket.to(`trip: ${tripId}`).emit("member:joined", {
+        userId: socket.data.userId,
+      });
+    });
+
+    socket.on("location:update", ({ tripId, lat, lng }) => {
+      socket.to(`trip:${tripId}`).emit("location:update", {
+        userId: socket.data.userId,
+        lat,
+        lng,
+      });
+    });
   });
 }
 
