@@ -40,11 +40,9 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 6. [x] `.env` — `EXPO_PUBLIC_API_URL` (localhost for web, LAN IP for phone)
 7. [x] Milestone: call `GET /health` from the app and render the response
 
-## Phase 5 Plan (exam season — low-intensity)
+## Phase 5 Plan (confirmed scope — A + B + C; nickname, popups, vehicle rename/delete, profile-edit deferred to Phase 6)
 
-The original "fake auth" plan was superseded — the auth flow went **real** early (backend + persistent token + route protection), and dynamic trips read/create went live. `utils/joinCode.ts` and `data/trips.ts` are retired or pending retirement.
-
-Remaining: `trip/details` full build (roster + Start Trip), `trip/live-map` (Mappls + sockets defer to Phase 6; static shell exists). The dynamic-data groundwork is done: `apiFetch` wrapper, health milestone ✓, real auth ✓, real trips read/create/join ✓.
+Dynamic trips read/create are live; join went real (server errors surfaced in-screen, vehicle row created). Remaining: full Convoy Lobby (roster + Start Trip + Delete), real Profile data, UX polish trio, plus small backend touch-ups (userId in /me response; socket room membership check). Then Phase 6: Mappls map (needs EAS dev build), real GPS location tracking, notifications, hardening.
 
 ## Phase 6 Plan (November)
 

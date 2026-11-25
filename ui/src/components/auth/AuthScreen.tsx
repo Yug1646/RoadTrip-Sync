@@ -25,6 +25,8 @@ import Feather from "@expo/vector-icons/Feather";
 //? Services
 import { apiFetch } from "@/services/api";
 import { saveToken } from "@/services/token";
+import { connectSocket } from "@/services/socket";
+ "@/services/socket"
 
 type Mode = "login" | "signup";
 
@@ -57,6 +59,7 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
           body: JSON.stringify({ email, username, password }),
         });
         saveToken(response.token);
+        connectSocket();
         console.log("Register Success", response);
       } else {
         const response = await apiFetch<AuthResponse>("/api/auth/login", {
@@ -64,6 +67,7 @@ export default function AuthScreen({ initialMode }: AuthScreenProps) {
           body: JSON.stringify({ email, password }),
         });
         saveToken(response.token);
+        connectSocket();
         console.log("Login Success", response);
       }
       if (Platform.OS !== "web") router.dismissAll();

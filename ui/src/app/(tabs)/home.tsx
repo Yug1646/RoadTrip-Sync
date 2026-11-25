@@ -39,10 +39,7 @@ export default function HomeScreen() {
       const data = await apiFetch<HealthResponse>("/health");
       console.log("SUCCESS:", data);
     } catch (error) {
-      console.log(
-        "FAILED:",
-        error instanceof Error ? error.message : error,
-      );
+      console.log("FAILED:", error instanceof Error ? error.message : error);
     }
 
     try {
@@ -175,7 +172,11 @@ export default function HomeScreen() {
 
       <View style={styles.tripList}>
         {activeTrips.map((trip) => (
-          <TripCard key={trip.id} trip={trip} />
+          <TripCard
+            key={trip.id}
+            trip={trip}
+            onPress={() => router.push(`/trip/details?tripId=${trip.id}`)}
+          />
         ))}
         {activeTrips.length === 0 && (
           <View style={styles.emptyState}>

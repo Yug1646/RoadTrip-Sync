@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { View, Text, StyleSheet } from "react-native";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 import {
   borderRadius,
   colors,
@@ -32,11 +32,17 @@ const STATUS_BADGE: Record<
   },
 };
 
-export default function TripCard({ trip }: { trip: Trip }) {
+type TripCardProps = {
+  trip: Trip;
+  onPress?: () => void;
+};
+
+export default function TripCard({ trip, onPress }: TripCardProps) {
   const badge = STATUS_BADGE[trip.status];
 
   return (
-    <View style={styles.card}>
+    <Pressable style={styles.card} onPress={onPress}>
+    <View>
       <View style={styles.topRow}>
         <View style={[styles.badge, { backgroundColor: badge.bg }]}>
           {trip.status === "active" && (
@@ -50,19 +56,24 @@ export default function TripCard({ trip }: { trip: Trip }) {
           </Text>
         </View>
 
-        {trip.status === "active" ? (
-          <View style={styles.livePill}>
-            <Feather name="radio" size={12} color={colors.tertiary} />
-            <Text style={styles.livePillText}>Live Sync</Text>
-          </View>
-        ) : (
-          <View style={styles.metaRow}>
-            {trip.status === "planned" && (
+        <View style={styles.topRight}>
+          {trip.status === "active" ? (
+            <View style={styles.livePill}>
+              <Feather name="radio" size={12} color={colors.tertiary} />
+              <Text style={styles.livePillText}>Live Sync</Text>
+            </View>
+          ) : trip.dateLabel ? (
+            <View style={styles.metaRow}>
               <Feather name="clock" size={12} color={colors.neutral.body} />
-            )}
-            <Text style={styles.dateText}>{trip.dateLabel}</Text>
-          </View>
-        )}
+              <Text style={styles.dateText}>{trip.dateLabel}</Text>
+            </View>
+          ) : null}
+          <Feather
+            name="chevron-right"
+            size={14}
+            color={colors.neutral.placeholder}
+          />
+        </View>
       </View>
 
       <View style={styles.titleRow}>
@@ -83,41 +94,44 @@ export default function TripCard({ trip }: { trip: Trip }) {
         )}
       </View>
 
-      <View style={styles.footer}>
-        <View style={styles.footerLeft}>
-          {trip.members && (
-            <View style={styles.avatarRow}>
-              {trip.members.map((member, index) => (
-                <View
-                  key={member.initial}
-                  style={[
-                    styles.avatar,
-                    {
-                      backgroundColor:
-                        AVATAR_COLORS[index % AVATAR_COLORS.length],
-                    },
-                  ]}
-                >
-                  <Text style={styles.avatarText}>{member.initial}</Text>
-                </View>
-              ))}
-              {trip.extraMembers != null && (
-                <View style={[styles.avatar, styles.avatarExtra]}>
-                  <Text style={styles.avatarExtraText}>
-                    +{trip.extraMembers}
-                  </Text>
-                </View>
-              )}
-            </View>
-          )}
-          <Text style={styles.footerText}>{trip.footerText}</Text>
+      {(trip.footerText || trip.members) && (
+        <View style={styles.footer}>
+          <View style={styles.footerLeft}>
+            {trip.members && (
+              <View style={styles.avatarRow}>
+                {trip.members.map((member, index) => (
+                  <View
+                    key={member.initial}
+                    style={[
+                      styles.avatar,
+                      {
+                        backgroundColor:
+                          AVATAR_COLORS[index % AVATAR_COLORS.length],
+                      },
+                    ]}
+                  >
+                    <Text style={styles.avatarText}>{member.initial}</Text>
+                  </View>
+                ))}
+                {trip.extraMembers != null && (
+                  <View style={[styles.avatar, styles.avatarExtra]}>
+                    <Text style={styles.avatarExtraText}>
+                      +{trip.extraMembers}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+            <Text style={styles.footerText}>{trip.footerText}</Text>
+          </View>
+          <View style={styles.footerAction}>
+            <Text style={styles.footerActionText}>{trip.footerAction}</Text>
+            <Feather name="chevron-right" size={14} color={colors.secondary} />
+          </View>
         </View>
-        <View style={styles.footerAction}>
-          <Text style={styles.footerActionText}>{trip.footerAction}</Text>
-          <Feather name="chevron-right" size={14} color={colors.secondary} />
-        </View>
-      </View>
+      )}
     </View>
+    </Pressable>
   );
 }
 
@@ -134,6 +148,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  topRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
   },
   badge: {
     flexDirection: "row",

@@ -56,8 +56,12 @@ export default function DetailsScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.neutral.background },
-  content: { padding: spacing.lg, gap: spacing.md },
+  screen: {
+    flex: 1,
+    backgroundColor: colors.neutral.background,
+    paddingHorizontal: spacing.lg,
+  },
+  content: { paddingTop: spacing.md, gap: spacing.md },
   infoCard: {
     backgroundColor: colors.neutral.card,
     borderWidth: 1,

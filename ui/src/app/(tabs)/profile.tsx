@@ -10,6 +10,7 @@ import {
 } from "@/constants/theme";
 import { trips } from "@/data/trips";
 import { clearToken } from "@/services/token";
+import { disconnectSocket } from "@/services/socket";
 
 const PREFERENCES = [
   {
@@ -48,6 +49,7 @@ export default function ProfileScreen() {
   ];
 
   const handleLogout = () => {
+    disconnectSocket();
     clearToken();
     router.replace("/");
   };

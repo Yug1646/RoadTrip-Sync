@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import {
   Pressable,
@@ -32,6 +33,7 @@ const CHIPS: { key: Filter; label: string }[] = [
 ];
 
 export default function TripsScreen() {
+  const router = useRouter();
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -125,7 +127,11 @@ export default function TripsScreen() {
 
       <View style={styles.list}>
         {visibleTrips.map((trip) => (
-          <TripCard key={trip.id} trip={trip} />
+          <TripCard
+            key={trip.id}
+            trip={trip}
+            onPress={() => router.push(`/trip/details?tripId=${trip.id}`)}
+          />
         ))}
         {visibleTrips.length === 0 && (
           <View style={styles.emptyState}>
