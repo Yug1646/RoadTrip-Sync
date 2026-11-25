@@ -63,7 +63,3 @@ RoadTrip Sync/
 ```
 
 Backend progress is tracked in [server/README.md](server/README.md).
-
-## Status
-
-Phase 2 and 3 **complete** — backend fully built and tested (21 REST endpoints). **Phase 4 started** — React Native (Expo) app scaffolded in `ui/`; mobile plan lives in `ui/README.md`. Socket.IO is implemented alongside Phase 4.

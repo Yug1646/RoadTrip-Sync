@@ -27,7 +27,7 @@ React Native + TypeScript app built with **Expo Router**. This is the Phase 4+ f
 - Tab bar (Home / Trips / Profile) with brand tints, render-prop icons, logo + avatar header on all tabs.
 - Brand asset bundled: `assets/images/appLogo.png` (header logo). App icon / splash / favicon still pending 1024×1024 export — required before first EAS build.
 - Layout convention: tab screens use the native header; **custom screens use `SafeAreaView` → `KeyboardAvoidingView` → `ScrollView`** (keyboard-safe, notch-safe).
-- Stubs remaining: `trip/details`, `trip/live-map`.
+- Stubs remaining: `trip/live-map` (static shell built — Mappls + real socket data in Phase 6). `trip/details` renders real trip data with a **static roster** + unwired buttons — logic pass pending: roster fetch, creator-only Start/Delete wiring, socket room re-join.
 - Data fetching pattern: tab screens load via `useFocusEffect` (refetch on every focus) + `RefreshControl` pull-to-refresh; action screens fetch in event handlers. All requests flow through `services/api.ts`.
 
 ## Phase 4 Plan
